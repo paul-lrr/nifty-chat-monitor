@@ -1,0 +1,107 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+body {
+	background-color:black !important;
+	font-family: 'Open Sans Condensed', sans-serif !important;
+}
+.chat-header {
+	display:none !important;
+}
+.chat-interface{
+	display:none !important;
+}
+.chat-messages {
+	bottom:0px !important;
+}
+.tse-content{
+	height:100%;
+	overflow-y:scroll !important;
+}
+.chat-display {
+	height:100%;
+}
+.chat-room{
+	top:0px !important;
+	background-color:black !important;
+	/*transform: rotate(180deg) !important;*/
+}
+.chat-lines {
+	background-color:black !important;
+	color:#eee;
+	display: flex;
+    flex-direction: column;
+	justify-content:flex-start;
+}
+.chat-lines.reverse {
+    flex-direction: column-reverse;
+
+
+}
+.chat-lines li {
+}
+.chat-lines li.odd{
+	background-color:#111 !important;
+	border-top:#444 solid 1px !important;
+	border-bottom:#444 solid 1px !important;
+}
+.chat-messages .chat-line {
+    padding:6px 1px !important;
+		font-size:32px !important;
+	line-height:35px !important;
+}
+.tse-scrollbar {
+	display:none !important;
+}
+.mod-icon {
+	display:none;
+}
+.badges {
+	display:none;
+}
+img {
+    max-width:100%;
+}
+.chat-messages .whisper-line.whisper-incoming {
+    background-color:#3b010e !important;
+}
+a {
+	color:inherit !important;
+}
+.from {
+	color:green !important;
+}
+.message {
+    color:white !important;
+    font-weight:300 !important;
+}
+
+.deleted {
+	opacity:0.2;
+}
+.mentioned {
+	color: inherit;
+    background-color: inherit;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+/*------HIGHLIGHTING-----*/
+.chat-lines li[data-badges*="Moderator"] .from {
+    color: #8383f9 !important;
+}
+.chat-lines li[data-badges*="Broadcaster"] {
+    background-color: #000090 !important;
+}
+.chat-lines li[data-badges*="Broadcaster"] .from {
+    color: #00b5e0 !important;
+}
+.chat-lines li[data-user="LRRbot"] .from {
+	color:purple !important;
+}
+.chat-lines li[data-user="LRRbot"][data-message*="Thanks for"]{
+	background-color:purple !important;
+}
+.chat-lines li[data-user="LRRbot"][data-message*="Thanks for"] .from{
+	color:black !important;
+}
