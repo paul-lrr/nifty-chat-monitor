@@ -1,18 +1,18 @@
 // ==UserScript==
-// @name           Twitch Chat display for monitor
+// @name           Twitch Chat display for monitor (LRRtech)
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
-// @match        https://www.twitch.tv/*/chat?display=true*
+// @match        https://www.twitch.tv/*/chat?display*
 // @version    0.1
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 //@grant       GM_getResourceText
 //@grant       GM_addStyle
-//@resource style http://localhost/chat-monitor.css
-//@resource highlight http://localhost/chat-monitor-highlight.css
+//@resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
+//@resource highlight https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-highlights.css
 // ==/UserScript==
-
-var qs = JSON.parse('{"' + decodeURI(location.search.substring(1)).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+let getQS = (str)=>{let a, q = {},r = /([^?=&\r\n]+)(?:=([^&\r\n]*))?/g;while ((a = r.exec(str)) !== null) {q[a[1]] = a[2]||'';}return q;};
+var qs = getQS(location.search);
 
 waitForKeyElements (".chat-lines", actionFunction);
 function actionFunction(){
