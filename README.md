@@ -1,5 +1,6 @@
 # Nifty Chat Monitor
-userscript for Grease/Tampermonkey to reformat the default twitch chat for use on an non-interactive chat monitor. It removes all extraneous formatting to maximize screen real estate space for the chat text and adds various hooks to each chat message so that can be effectively targetted by CSS rules.
+**NOTE: Currently the userscript DOES NOT work witht he new Twitch Beta chat (url starts with https://go.twitch.tv)**
+Userscript for Grease/Tampermonkey to reformat the default twitch chat for use on an non-interactive chat monitor. It removes all extraneous formatting to maximize screen real estate space for the chat text and adds various hooks to each chat message so that can be effectively targetted by CSS rules.
 
 ![smaple image](https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-sample.png)
 *LEFT: default Dark mode twitch Chat -- RIGHT: Nifty Chat Monitor reformated chat*
