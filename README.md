@@ -1,6 +1,9 @@
 # Nifty Chat Monitor
 userscript for Grease/Tampermonkey to reformat the default twitch chat for use on an non-interactive chat monitor. It removes all extraneous formatting to maximize screen real estate space for the chat text and adds various hooks to each chat message so that can be effectively targetted by CSS rules.
 
+![smaple image](https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-sample.png)
+*LEFT: default Dark mode twitch Chat -- RIGHT: Nifty Chat Monitor reformated chat*
+
 ### Features
 - removes header
 - removes text input field
@@ -55,3 +58,4 @@ See the `chat-monitor-highlights.css` file for examples of using these hooks to 
 
 ## Customizing
 If you want to change the formatting or add new highlights, copy the supplied chat-monitor.css and chat-monitor-highlights.css to your local system and modify the two @resource lines in the header block of the script to point to your files. 
+
