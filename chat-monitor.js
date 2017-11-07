@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Twitch Chat display for monitor (LRRtech)
+// @name           Nifty Chat Monitor
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/*/chat?display*
@@ -9,8 +9,9 @@
 //@grant       GM_getResourceText
 //@grant       GM_addStyle
 //@resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
-//@resource highlight https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-highlights.css
+//@resource highlight https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-highlight.css
 // ==/UserScript==
+
 let getQS = (str)=>{let a, q = {},r = /([^?=&\r\n]+)(?:=([^&\r\n]*))?/g;while ((a = r.exec(str)) !== null) {q[a[1]] = a[2]||'';}return q;};
 var qs = getQS(location.search);
 
