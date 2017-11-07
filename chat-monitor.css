@@ -52,10 +52,10 @@ body {
 	display:none !important;
 }
 .mod-icon {
-	display:none;
+	display:none !important;
 }
 .badges {
-	display:none;
+	display:none !important;
 }
 img {
     max-width:100%;
