@@ -27,7 +27,7 @@ Userscript for Grease/Tampermonkey to reformat the default twitch chat for use o
 
 ## Installation
 - Install the [Tampermonkey](https://tampermonkey.net/) extension for your browser
-- Open the Tempermonkey dashboard and create a new userscript (the + button in the top right - beside Installed userscripts)
+- Open the Tampermonkey dashboard and create a new userscript (the + button in the top right - beside Installed userscripts)
 - Copy the contents of `chat-monitor.js` into the new Tampermonkey userscript
 - Save userscript and make sure it is enabled in Tampermonkey
 
