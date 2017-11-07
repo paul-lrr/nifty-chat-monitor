@@ -18,7 +18,7 @@ var qs = getQS(location.search);
 waitForKeyElements (".chat-lines", actionFunction);
 function actionFunction(){
     if(typeof qs.reverse !== 'undefined'){
-        $( ".chat-lines" ).addClass('reverse');
+        $( ".tse-content" ).addClass('reverse');
     }
     // The node to be monitored
     var target = $( ".chat-lines" )[0];
