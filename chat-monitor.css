@@ -16,13 +16,16 @@ body {
 	height:100%;
 	overflow-y:scroll !important;
 }
+.tse-content.reverse{
+	height:auto;
+	overflow-y:hidden !important;
+}
 .chat-display {
 	height:100%;
 }
 .chat-room{
 	top:0px !important;
 	background-color:black !important;
-	/*transform: rotate(180deg) !important;*/
 }
 .chat-lines {
 	background-color:black !important;
@@ -31,10 +34,8 @@ body {
     flex-direction: column;
 	justify-content:flex-start;
 }
-.chat-lines.reverse {
+.reverse .chat-lines {
     flex-direction: column-reverse;
-
-
 }
 .chat-lines li {
 }
