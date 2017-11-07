@@ -12,13 +12,9 @@ body {
 .chat-messages {
 	bottom:0px !important;
 }
-.tse-content{
+.tse-content.reverse{
 	height:100%;
 	overflow-y:scroll !important;
-}
-.tse-content.reverse{
-	height:auto;
-	overflow-y:hidden !important;
 }
 .chat-display {
 	height:100%;
