@@ -85,23 +85,3 @@ a {
 ::-webkit-scrollbar { 
     display: none; 
 }
-
-/*------HIGHLIGHTING-----*/
-.chat-lines li[data-badges*="Moderator"] .from {
-    color: #8383f9 !important;
-}
-.chat-lines li[data-badges*="Broadcaster"] {
-    background-color: #000090 !important;
-}
-.chat-lines li[data-badges*="Broadcaster"] .from {
-    color: #00b5e0 !important;
-}
-.chat-lines li[data-user="LRRbot"] .from {
-	color:purple !important;
-}
-.chat-lines li[data-user="LRRbot"][data-message*="Thanks for"]{
-	background-color:purple !important;
-}
-.chat-lines li[data-user="LRRbot"][data-message*="Thanks for"] .from{
-	color:black !important;
-}
