@@ -11,7 +11,6 @@ body {
 .chat-interface {
 	font-size: 2rem !important;
 	background: black;
-	margin-bottom: -111px;
 }
 
 select.form__input,
@@ -36,9 +35,15 @@ textarea.form__input,
 	height:100%;
 	overflow-y:scroll !important;
 }
+
 .chat-display {
-	height:100%;
+	height: calc(100% - 111px);
 }
+
+.chat-display-without-interface {
+	height: 100% !important;
+}
+
 .chat-room{
 	top:0px !important;
 	background-color:black !important;
