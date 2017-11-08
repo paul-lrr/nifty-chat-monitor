@@ -12,7 +12,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_log
-// @resource style https://raw.githubusercontent.com/jack-d-watson/nifty-chat-monitor/feature/basic-config-menu/chat-monitor.css
+// @resource style https://raw.githubusercontent.com/jack-d-watson/nifty-chat-monitor/master/chat-monitor.css
 // @resource highlight https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-highlight.css
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
