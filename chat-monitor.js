@@ -27,6 +27,8 @@ let getQS = (str)=>{
 
 var qs = getQS(location.search);
 
+var inlineImages = false;
+
 //Create config page fields
 //Fields appear in the order written below.
 var configFields = {
@@ -39,14 +41,44 @@ var configFields = {
         "label" : "New messages appear on top",
         "type" : "checkbox",
         "default" : true
+    },
+    "InlineImages": {
+        "label" : "Display images that are linked",
+        "type" : "checkbox",
+        "default" : true
+    },
+    "CustomHighlighting": {
+        "label" : "CSS User Highlighting",
+        "type" : "textarea",
+        "default" : ".chat-lines li[data-badges*=\"Moderator\"] .from {\n" +
+                        "\tcolor: #8383f9 !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-badges*=\"Broadcaster\"] {\n" +
+                        "\tbackground-color: #000090 !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-badges*=\"Broadcaster\"] .from {\n" +
+                        "\tcolor: #00b5e0 !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-user=\"LRRbot\"] .from {\n" +
+                    	"\tcolor:purple !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-user=\"LRRbot\"][data-message*=\"thanks for\"]{\n" +
+                    	"\tbackground-color:purple !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-user=\"LRRbot\"][data-message*=\"thanks for\"] .from{\n" +
+                    	"\tcolor:black !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-message*=\"loadingreadyrun\"] {\n" +
+                        "\tbackground-color: #00005d !important;\n" +
+                    "}\n"
     }
 };
-
 
 initConfig();
 waitForKeyElements (".chat-lines", onChatLoad);
 
 function onChatLoad() {
+    loadSettings();
     actionFunction();
 }
 
@@ -60,26 +92,42 @@ function initConfig() {
         // I need a better way of settings this css attribute. I'm thinking of converting
         // it to a variable, because I could use new lines in that and keep it somewhere
         // out of sight, but thats for later-Jack
-        "css" : "#chat-config .field_label { font-size: 32px !important; line-height: 35px !important; font-family: 'Open Sans Condensed', sans-serif !important; font-weight: normal !important; } .config_var input[type=checkbox] {  transform: scale(2.0); }" //adds CSS to the config page
+        "css" : "#chat-config .field_label { font-size: 32px !important; line-height: 35px !important; font-family: 'Open Sans Condensed', sans-serif !important; font-weight: normal !important; } .config_var input[type=checkbox] {  transform: scale(2.0); } #chat-config_field_CustomHighlighting { width: 90%; height: 500px; }" //adds CSS to the config page
     });
 }
 
-function actionFunction(){
-
-    //$( ".ember-chat-container").append("<div id=\"settings-page\" style=\"position: absolute;	right: 25px; top: 25px;	width: 50px; height: 50px; color: white; background:  white; border: white 1px solid; z-index: 50;><span class=\"glyphicon glyphicon-cog\"></span></div>");
+function loadSettings() {
+    //Add settings wheel to page
     $( ".ember-chat-container").append("<div id=\"settings-wheel\"> <i class=\"material-icons\">settings</i> </div>");
     $( "#settings-wheel").click(function() {
       GM_config.open();
     });
 
+    //Reverse messages
     if(typeof qs.reverse !== 'undefined' || GM_config.get("ReverseDirection")) {
         $( ".tse-content" ).addClass('reverse');
     }
 
+    //Hide chat interface
     if(GM_config.get("HideChatInput")) {
         $( ".qa-chat" ).addClass("hide-chat-interface");
     }
 
+    //Check if we should be adding inline images or not
+    if(typeof qs.img !== 'undefined' || GM_config.get("InlineImages")) {
+        inlineImages = true;
+    }
+
+    //Add CSS from text area
+    var customHighlighting = GM_config.get("CustomHighlighting");
+    var head = document.getElementsByTagName("head")[0];
+    var newCss = document.createElement("style");
+    newCss.type = "text/css";
+    newCss.innerHTML = customHighlighting;
+    head.appendChild(newCss);
+}
+
+function actionFunction() {
     // The node to be monitored
     var target = $( ".chat-lines" )[0];
     // Create an observer instance
@@ -104,7 +152,7 @@ function actionFunction(){
                     $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
 
                     //add inline images
-                    if(typeof qs.img !== 'undefined'){
+                    if(inlineImages) {
                         var $links = $node.find('.message a');
                         $links.each(function(i){
                             var re = /(.*(?:jpg|png|gif))$/mg;
