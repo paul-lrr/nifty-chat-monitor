@@ -6,9 +6,28 @@ body {
 .chat-header {
 	display:none !important;
 }
-.chat-interface{
+
+/* Thanks malc for the fixes to how the chat-interface looks*/
+.chat-interface {
+	font-size: 2rem !important;
+	background: black;
+}
+
+select.form__input,
+textarea.form__input,
+.form__input[type=text],
+.form__input[type=email],
+.form__input[type=password],
+.form__input[type=search],
+.chat-interface,
+.chat-interface__submit {
+	font-size: 2.4rem !important;
+}
+
+.hide-chat-interface{
 	display:none !important;
 }
+
 .chat-messages {
 	bottom:0px !important;
 }
@@ -16,9 +35,15 @@ body {
 	height:100%;
 	overflow-y:scroll !important;
 }
+
 .chat-display {
-	height:100%;
+	height: calc(100% - 111px);
 }
+
+.chat-display-without-interface {
+	height: 100% !important;
+}
+
 .chat-room{
 	top:0px !important;
 	background-color:black !important;
@@ -42,7 +67,7 @@ body {
 }
 .chat-messages .chat-line {
     padding:6px 1px !important;
-		font-size:32px !important;
+	font-size:32px !important;
 	line-height:35px !important;
 }
 .tse-scrollbar {
@@ -79,6 +104,14 @@ a {
     background-color: inherit;
 }
 
-::-webkit-scrollbar { 
-    display: none; 
+::-webkit-scrollbar {
+    display: none;
+}
+
+#settings-wheel {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	color: white;
+	z-index: 50;
 }
