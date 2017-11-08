@@ -24,20 +24,17 @@ textarea.form__input,
 	font-size: 2.4rem !important;
 }
 
-.hide-chat-interface{
+.hide-chat-interface .chat-interface {
 	display:none !important;
 }
 
-.chat-messages {
+.hide-chat-interface .chat-messages {
 	bottom:0px !important;
 }
+
 .tse-content.reverse{
 	height:100%;
 	overflow-y:scroll !important;
-}
-
-.chat-display {
-	height: calc(100% - 111px);
 }
 
 .chat-display-without-interface {

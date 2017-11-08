@@ -77,8 +77,7 @@ function actionFunction(){
     }
 
     if(GM_config.get("HideChatInput")) {
-        $( ".chat-interface" ).addClass("hide-chat-interface");
-        $( ".chat-display" ).addClass("chat-display-without-interface");
+        $( ".qa-chat" ).addClass("hide-chat-interface");
     }
 
     // The node to be monitored
