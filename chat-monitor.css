@@ -6,9 +6,11 @@ body {
 .chat-header {
 	display:none !important;
 }
-.chat-interface{
+
+.hide-chat-interface{
 	display:none !important;
 }
+
 .chat-messages {
 	bottom:0px !important;
 }
