@@ -59,5 +59,4 @@ The root element of each message is given the following extra attributes:
 See the `chat-monitor-highlights.css` file for examples of using these hooks to highlight chat messages
 
 ## Customizing
-If you want to change the formatting or add new highlights, copy the supplied chat-monitor.css and chat-monitor-highlights.css to your local system and modify the two @resource lines in the header block of the script to point to your files. 
-
+If you want to change the formatting or add new highlights, copy the supplied chat-monitor.css and chat-monitor-highlights.css to your local system and modify the two @resource lines in the header block of the script to point to your files.
