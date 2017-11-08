@@ -7,6 +7,10 @@ body {
 	display:none !important;
 }
 
+.chat-interface {
+	font-size: 2rem !important;
+}
+
 .hide-chat-interface{
 	display:none !important;
 }
@@ -44,7 +48,7 @@ body {
 }
 .chat-messages .chat-line {
     padding:6px 1px !important;
-		font-size:32px !important;
+	font-size:32px !important;
 	line-height:35px !important;
 }
 .tse-scrollbar {
@@ -95,13 +99,4 @@ a {
 	background:  white;
 	border: white 1px solid;
 	z-index: 50;
-}
-
-.config-frame {
-	background-color: white;
-	border: 1px solid white;
-}
-
-#_wrapper {
-	background-color: white;
 }
