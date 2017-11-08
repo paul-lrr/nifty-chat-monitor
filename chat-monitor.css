@@ -83,7 +83,7 @@ a {
     display: none;
 }
 
-.settings-wheel {
+#settings-wheel {
 	position: absolute;
 	right: 25px;
 	top: 25px;
