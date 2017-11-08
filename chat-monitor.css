@@ -7,8 +7,22 @@ body {
 	display:none !important;
 }
 
+/* Thanks malc for the fixes to how the chat-interface looks*/
 .chat-interface {
 	font-size: 2rem !important;
+	background: black;
+	margin-bottom: -111px;
+}
+
+select.form__input,
+textarea.form__input,
+.form__input[type=text],
+.form__input[type=email],
+.form__input[type=password],
+.form__input[type=search],
+.chat-interface,
+.chat-interface__submit {
+	font-size: 2.4rem !important;
 }
 
 .hide-chat-interface{
