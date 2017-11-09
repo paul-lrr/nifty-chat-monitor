@@ -50,13 +50,8 @@ var configFields = {
     "CustomHighlighting": {
         "label" : "CSS User Highlighting",
         "type" : "textarea",
-        "default" : ".chat-lines li[data-badges*=\"Moderator\"] .from {\n" +
-                        "\tcolor: #8383f9 !important;\n" +
-                    "}\n" +
-                    ".chat-lines li[data-badges*=\"Broadcaster\"] {\n" +
-                        "\tbackground-color: #000090 !important;\n" +
-                    "}\n" +
-                    ".chat-lines li[data-badges*=\"Broadcaster\"] .from {\n" +
+        //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
+        "default" : ".chat-lines li[data-badges*=\"Broadcaster\"] .from {\n" +
                         "\tcolor: #00b5e0 !important;\n" +
                     "}\n" +
                     ".chat-lines li[data-user=\"LRRbot\"] .from {\n" +
@@ -67,9 +62,6 @@ var configFields = {
                     "}\n" +
                     ".chat-lines li[data-user=\"LRRbot\"][data-message*=\"thanks for\"] .from{\n" +
                     	"\tcolor:black !important;\n" +
-                    "}\n" +
-                    ".chat-lines li[data-message*=\"loadingreadyrun\"] {\n" +
-                        "\tbackground-color: #00005d !important;\n" +
                     "}\n"
     }
 };
