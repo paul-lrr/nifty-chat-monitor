@@ -13,7 +13,6 @@
 // @grant       GM_setValue
 // @grant       GM_log
 // @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
-// @resource highlight https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-highlight.css
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
 
@@ -51,18 +50,27 @@ var configFields = {
         "label" : "CSS User Highlighting",
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
-        "default" : ".chat-lines li[data-badges*=\"Broadcaster\"] .from {\n" +
+        "default" : ".chat-lines li[data-badges*="Moderator"] .from {\n" +
+                        "\tcolor: #8383f9 !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-badges*="Broadcaster"] {\n" +
+                        "\tbackground-color: #000090 !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-badges*="Broadcaster"] .from {\n" +
                         "\tcolor: #00b5e0 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user=\"LRRbot\"] .from {\n" +
-                    	"\tcolor:purple !important;\n" +
+                    ".chat-lines li[data-user="LRRbot"] .from {\n" +
+                        "\tcolor:purple !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user=\"LRRbot\"][data-message*=\"thanks for\"]{\n" +
-                    	"\tbackground-color:purple !important;\n" +
+                    ".chat-lines li[data-user="LRRbot"][data-message*="thanks for"]{\n" +
+                        "\tbackground-color:purple !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user=\"LRRbot\"][data-message*=\"thanks for\"] .from{\n" +
-                    	"\tcolor:black !important;\n" +
-                    "}\n"
+                    ".chat-lines li[data-user="LRRbot"][data-message*="thanks for"] .from{\n" +
+                        "\tcolor:black !important;\n" +
+                    "}\n" +
+                    ".chat-lines li[data-message*="loadingreadyrun"] {\n" +
+                        "\tbackground-color: #00005d !important;\n" +
+                    "}"
     }
 };
 
@@ -177,15 +185,8 @@ function actionFunction() {
     observer.observe(target, config);
 }
 
-/*function onConfigWindowOpen() {
-    $("#_wrapper").addClass("config-frame");
-    $("#_wrapper").css("background-color", "white");
-}*/
-
 //inject custom stylessheet
 var style = GM_getResourceText('style');
 GM_addStyle(style);
 var materialIcons = GM_getResourceText('material-icons');
 GM_addStyle(materialIcons);
-var highlight = GM_getResourceText('highlight');
-GM_addStyle(highlight);
