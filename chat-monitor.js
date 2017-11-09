@@ -12,7 +12,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_log
-// @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
+// @resource style https://raw.githubusercontent.com/jack-d-watson/nifty-chat-monitor/master/chat-monitor.css
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
 
@@ -50,25 +50,25 @@ var configFields = {
         "label" : "CSS User Highlighting",
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
-        "default" : ".chat-lines li[data-badges*="Moderator"] .from {\n" +
+        "default" : ".chat-lines li[data-badges*='Moderator'] .from {\n" +
                         "\tcolor: #8383f9 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-badges*="Broadcaster"] {\n" +
+                    ".chat-lines li[data-badges*='Broadcaster'] {\n" +
                         "\tbackground-color: #000090 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-badges*="Broadcaster"] .from {\n" +
+                    ".chat-lines li[data-badges*='Broadcaster'] .from {\n" +
                         "\tcolor: #00b5e0 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user="LRRbot"] .from {\n" +
+                    ".chat-lines li[data-user='LRRbot'] .from {\n" +
                         "\tcolor:purple !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user="LRRbot"][data-message*="thanks for"]{\n" +
+                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for']{\n" +
                         "\tbackground-color:purple !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user="LRRbot"][data-message*="thanks for"] .from{\n" +
+                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for'] .from{\n" +
                         "\tcolor:black !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-message*="loadingreadyrun"] {\n" +
+                    ".chat-lines li[data-message*='loadingreadyrun'] {\n" +
                         "\tbackground-color: #00005d !important;\n" +
                     "}"
     }
