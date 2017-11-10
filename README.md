@@ -16,6 +16,7 @@ Userscript for Grease/Tampermonkey to reformat the default twitch chat for use o
 - removes scrollbars
 - optionally reverse chat direction
 - optionally inlines linked images
+- configurable highlighting
 
 ### Default Highlighting
 - Channel Owner message highlighted in blue
@@ -35,6 +36,8 @@ Userscript for Grease/Tampermonkey to reformat the default twitch chat for use o
 To view the reformatted chat, go to `http://www.twitch.tv/<CHANNEL NAME>/chat?display`
 
 You can also click on the Popout link in the twitch chat pane and then remove the `?popout=` from the url and add `?display` to the end
+
+To access options click the settings wheel in the top right hand corner of the screen. Remember to save, and then refresh the page to apply the new options.
 
 ### Display Modes
 A few extra functions can be accessed by adding to the query string of the chat window
@@ -59,5 +62,4 @@ The root element of each message is given the following extra attributes:
 See the `chat-monitor-highlights.css` file for examples of using these hooks to highlight chat messages
 
 ## Customizing
-If you want to change the formatting or add new highlights, copy the supplied chat-monitor.css and chat-monitor-highlights.css to your local system and modify the two @resource lines in the header block of the script to point to your files. 
-
+If you want to change the formatting or add new highlights, either copy the supplied chat-monitor.css and chat-monitor-highlights.css to your local system and modify the two @resource lines in the header block of the script to point to your files, or modify the CSS User Highlighting text area under the settings menu with whatever CSS you would like to add to the page.
