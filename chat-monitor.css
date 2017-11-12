@@ -67,6 +67,13 @@ textarea.form__input,
 	font-size:32px !important;
 	line-height:35px !important;
 }
+.special-message {
+    background-color: inherit !important;
+}
+.system-msg {
+    background-color: inherit !important;
+}
+
 .tse-scrollbar {
 	display:none !important;
 }
