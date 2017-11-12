@@ -119,3 +119,7 @@ a {
 	color: white;
 	z-index: 50;
 }
+
+.sticky-message {
+	display:none !important;
+}
