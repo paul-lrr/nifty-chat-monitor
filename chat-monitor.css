@@ -123,3 +123,6 @@ a {
 .sticky-message {
 	display:none !important;
 }
+.chat-messages {
+	top:0px !important;
+}
