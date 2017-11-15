@@ -85,6 +85,7 @@ textarea.form__input,
 }
 img {
     max-width:100%;
+    max-height:50vh;
 }
 .chat-messages .whisper-line.whisper-incoming {
     background-color:#3b010e !important;
