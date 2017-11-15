@@ -58,8 +58,9 @@ textarea.form__input,
 	background-color:black !important;
 	color:#eee;
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	justify-content:flex-start;
+	padding-top:0 !important;
 }
 .reverse .chat-lines {
     flex-direction: column-reverse;
@@ -68,13 +69,13 @@ textarea.form__input,
 }
 .chat-lines li.odd{
 	background-color:#111 !important;
-	border-top:#444 solid 1px !important;
-	border-bottom:#444 solid 1px !important;
 }
 .chat-messages .chat-line {
-    padding:6px 1px !important;
+	padding:3px 1px 3px 1px !important;
+	margin-top:2px !important;
 	font-size:32px !important;
 	line-height:35px !important;
+	border-bottom:#444 solid 1px !important;
 	animation:expand 1s linear; /* Needs to be linear as the animation has no idea when it will stop having a visual effect with max-height */
 	overflow:hidden;
 	display:flex;
