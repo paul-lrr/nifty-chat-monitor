@@ -8,7 +8,7 @@
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant       GM_getResourceText
 // @grant       GM_addStyle
-// @require  https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @require  https://raw.githubusercontent.com/sizzlemctwizzle/GM_config/master/gm_config.js
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_log
