@@ -21,6 +21,9 @@ body {
 	font-size: 2rem !important;
 	background: black;
 }
+.chatters .chat-header {
+	display:block !important;
+}
 
 select.form__input,
 textarea.form__input,
