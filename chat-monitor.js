@@ -245,7 +245,7 @@ function actionFunction() {
                         $links.each(function(i){
                             var re = /(.*(?:jpg|png|gif))$/mg;
                             if(re.test($(this).text())){
-                                $(this).html('<img src="'+$(this).text()+'">');
+                                $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
                             }
                         });
                     }

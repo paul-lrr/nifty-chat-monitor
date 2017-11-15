@@ -1,4 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+@keyframes expand {
+	from { max-height: 0; }
+	/*
+	Anything above 400 pixels in height will pop in after the animation, otherwise images will take a long time loading.
+	Could also be set at a value like 2000px, but then the animation time has to be multiplied by 5 as well.
+	*/
+	to { max-height: 400px; }
+}
+
 body {
 	background-color:black !important;
 	font-family: 'Open Sans Condensed', sans-serif !important;
@@ -49,8 +58,9 @@ textarea.form__input,
 	background-color:black !important;
 	color:#eee;
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	justify-content:flex-start;
+	padding-top:0 !important;
 }
 .reverse .chat-lines {
     flex-direction: column-reverse;
@@ -59,13 +69,17 @@ textarea.form__input,
 }
 .chat-lines li.odd{
 	background-color:#111 !important;
-	border-top:#444 solid 1px !important;
-	border-bottom:#444 solid 1px !important;
 }
 .chat-messages .chat-line {
-    padding:6px 1px !important;
+	padding:3px 1px 3px 1px !important;
+	margin-top:2px !important;
 	font-size:32px !important;
 	line-height:35px !important;
+	border-bottom:#444 solid 1px !important;
+	animation:expand 1s linear; /* Needs to be linear as the animation has no idea when it will stop having a visual effect with max-height */
+	overflow:hidden;
+	display:flex;
+	flex-direction:column-reverse; /* Makes the text stick to the bottom of the container so it visually slides in better */
 }
 .special-message {
     background-color: inherit !important;
