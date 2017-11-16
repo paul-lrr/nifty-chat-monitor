@@ -134,8 +134,12 @@ a {
 	position: absolute;
 	right: 5px;
 	top: 5px;
-	color: white;
+	color: rgba(255,255,255,0.3);
+	cursor:pointer;
 	z-index: 50;
+}
+#settings-wheel:hover {
+	color: rgba(255,255,255,1);
 }
 
 .sticky-message {
