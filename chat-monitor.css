@@ -53,7 +53,7 @@ textarea.form__input,
 	height: 100% !important;
 }
 
-.chat-room{
+.chat-room {
 	top:0px !important;
 	background-color:black !important;
 }
@@ -74,12 +74,11 @@ textarea.form__input,
 	background-color:#111 !important;
 }
 .chat-messages .chat-line {
-	padding:3px 1px 3px 1px !important;
+	padding:4px !important;
 	margin-top:2px !important;
-	font-size:32px !important;
-	line-height:35px !important;
+	font-size:20px !important;
+	line-height:24px !important;
 	border-bottom:#444 solid 1px !important;
-	animation:expand 1s linear; /* Needs to be linear as the animation has no idea when it will stop having a visual effect with max-height */
 	overflow:hidden;
 	display:flex;
 	flex-direction:column-reverse; /* Makes the text stick to the bottom of the container so it visually slides in better */
@@ -109,9 +108,6 @@ img {
 }
 a {
 	color:inherit !important;
-}
-.from {
-	color:green !important;
 }
 .message {
     color:white !important;

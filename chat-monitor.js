@@ -14,7 +14,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_log
-// @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
+// @resource style http://www.myshelter.net/chat-monitor.css
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
 
@@ -37,12 +37,12 @@ var configFields = {
     "HideChatInput": { //Id for field in html
         "label" : "Hide Chat Input Area", //Label that appears on the config
         "type" : "checkbox",
-        "default" : true
+        "default" : false
     },
     "ReverseDirection": {
         "label" : "New messages appear on top",
         "type" : "checkbox",
-        "default" : true
+        "default" : false
     },
     "InlineImages": {
         "label" : "Display images that are linked",
@@ -55,7 +55,7 @@ var configFields = {
         "type" : "text",
         "title" : "seperate usernames with commas, case sensitive",
         //These as defaults as I can't imagine Paul will mind, and I know I don't mind.
-        "default" : "ThingsOnMyStream, cheetoJack"
+        "default" : ""
     },
     "UsernameHighlightingColor": {
         "label" : "Highlight Color",
@@ -228,8 +228,16 @@ function actionFunction() {
                 var $node = $(newNodes[0]);
                 if( $node.hasClass( "ember-view" ) ) {
 
+                    let from = $node.find('.from');
+                    let rgb = from[0].style.color.match(/[0-9.]+/g);
+                    let luminance = (rgb[0]/128 + rgb[1]/85 + rgb[2]/255) / 6;
+                    if (luminance < 0.4) {
+                        rgb = [255 - rgb[0], 255 - rgb[1], 255 - rgb[2]];
+                        from.style.color = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
+                    }
+
                     //add data-user=<username> for user-based highlighting
-                    $node.attr('data-user',$node.find('.from').text());
+                    $node.attr('data-user', from.text());
 
                     //add data-badges=<badges> for badge-based highlighting
                     var badges = [];
