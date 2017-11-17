@@ -25,17 +25,6 @@ body {
 	display:block !important;
 }
 
-select.form__input,
-textarea.form__input,
-.form__input[type=text],
-.form__input[type=email],
-.form__input[type=password],
-.form__input[type=search],
-.chat-interface,
-.chat-interface__submit {
-	font-size: 2.4rem !important;
-}
-
 .hide-chat-interface .chat-interface {
 	display:none !important;
 }
@@ -53,7 +42,7 @@ textarea.form__input,
 	height: 100% !important;
 }
 
-.chat-room{
+.chat-room {
 	top:0px !important;
 	background-color:black !important;
 }
@@ -70,16 +59,15 @@ textarea.form__input,
 }
 .chat-lines li {
 }
-.chat-lines li.odd{
-	background-color:#111 !important;
+.chat-lines li.odd {
+	background-color:#1a1a1a !important;
 }
 .chat-messages .chat-line {
-	padding:3px 1px 3px 1px !important;
+	padding:4px !important;
 	margin-top:2px !important;
-	font-size:32px !important;
-	line-height:35px !important;
+	font-size:20px !important;
+	line-height:24px !important;
 	border-bottom:#444 solid 1px !important;
-	animation:expand 1s linear; /* Needs to be linear as the animation has no idea when it will stop having a visual effect with max-height */
 	overflow:hidden;
 	display:flex;
 	flex-direction:column-reverse; /* Makes the text stick to the bottom of the container so it visually slides in better */
@@ -94,12 +82,6 @@ textarea.form__input,
 .tse-scrollbar {
 	display:none !important;
 }
-.mod-icon {
-	display:none !important;
-}
-.badges {
-	display:none !important;
-}
 img {
     max-width:100%;
     max-height:50vh;
@@ -109,9 +91,6 @@ img {
 }
 a {
 	color:inherit !important;
-}
-.from {
-	color:green !important;
 }
 .message {
     color:white !important;
@@ -137,6 +116,7 @@ a {
 	color: rgba(255,255,255,0.3);
 	cursor:pointer;
 	z-index: 50;
+	cursor: pointer;
 }
 #settings-wheel:hover {
 	color: rgba(255,255,255,1);
@@ -147,4 +127,22 @@ a {
 }
 .chat-messages {
 	top:0px !important;
+}
+
+.alignusernames-parent {
+    position: relative;
+    padding-left: 208px;
+}
+
+.alignusernames-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 200px;
+    text-align: right;
+    overflow: hidden;
+}
+
+.alignusernames-container > .badges {
+    position: relative;
+    top: 2px;
 }
