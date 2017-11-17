@@ -135,4 +135,10 @@ a {
     top: 0; left: 0;
     width: 200px;
     text-align: right;
+    overflow: hidden;
+}
+
+.alignusernames-container > .badges {
+    position: relative;
+    top: 2px;
 }

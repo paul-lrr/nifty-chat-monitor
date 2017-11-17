@@ -31,6 +31,8 @@ var qs = getQS(location.search);
 var inlineImages = false;
 var usernameColors = false;
 var alignUsernames = false;
+var showBadges = false;
+var reverseDirection = false;
 
 //Create config page fields
 //Fields appear in the order written below.
@@ -58,6 +60,11 @@ var configFields = {
     },
     "AlignUsernames": {
         "label" : "Align usernames",
+        "type" : "checkbox",
+        "default" : false
+    },
+    "Badges": {
+        "label" : "Show badges",
         "type" : "checkbox",
         "default" : false
     },
@@ -145,6 +152,7 @@ function loadSettings() {
     //Reverse messages
     if (typeof qs.reverse !== 'undefined' || GM_config.get("ReverseDirection")) {
         $('.tse-content').addClass('reverse');
+        reverseDirection = true;
     }
 
     //Hide chat interface
@@ -159,6 +167,7 @@ function loadSettings() {
     
     usernameColors = !!GM_config.get("UsernameColors");
     alignUsernames = !!GM_config.get("AlignUsernames");
+    showBadges = !!GM_config.get("Badges");
 
     //Handles "Highlight" config fields
     addCssFromConfig(generateCss());
@@ -249,7 +258,9 @@ function actionFunction() {
                 //Put usernames in a fixed width container
                 let $container = $('<div class="alignusernames-container"></div>');
                 $parent.prepend($container);
-                $parent.find('.badges').detach().appendTo($container);
+                if (showBadges) {
+                    $parent.find('.badges').detach().appendTo($container);
+                }
                 $from.detach().appendTo($container);
                 $parent.find('.colon').remove();
             }
@@ -273,6 +284,10 @@ function actionFunction() {
             //add data-badges=<badges> for badge-based highlighting
             let badges = $node.find('.badges .badge').toArray().map((badgenode) => $(badgenode).attr('alt'));
             $node.attr('data-badges', badges.join(','));
+            
+            if (!showBadges) {
+                $node.find('.badges').remove();
+            }
 
             //add data-message=<message> for keyword-based highlighting
             $node.attr('data-message', $node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
@@ -285,6 +300,10 @@ function actionFunction() {
                     if (/(.*(?:jpg|png|gif))$/mg.test($linknode.text())) {
                         $linknode.html('<img src="' + $linknode.text() + '" alt="' + $linknode.text() + '"/>');
                     }
+                }
+                if (!reverseDirection) {
+                    let $scrollcontainer = $('.chat-messages > .tse-scroll-content');
+                    $scrollcontainer.scrollTop($scrollcontainer.height());
                 }
             }
 
