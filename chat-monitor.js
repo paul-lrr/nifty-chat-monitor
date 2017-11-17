@@ -301,10 +301,6 @@ function actionFunction() {
                         $linknode.html('<img src="' + $linknode.text() + '" alt="' + $linknode.text() + '"/>');
                     }
                 }
-                if (!reverseDirection) {
-                    let $scrollcontainer = $('.chat-messages > .tse-scroll-content');
-                    $scrollcontainer.scrollTop($scrollcontainer.height());
-                }
             }
 
             //add 'odd' class for zebra striping. Checks the last 10 lines in case of chat flooding
