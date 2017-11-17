@@ -98,7 +98,7 @@ var configFields = {
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
         "default" : ".chat-lines li[data-badges*='Moderator'] {\n" +
-                        "\tbackground-color: #8383f9 !important;\n" +
+                        "\tbackground-color: #5353d9 !important;\n" +
                     "}\n" +
                     ".chat-lines li[data-badges*='Broadcaster'] {\n" +
                         "\tbackground-color: #000090 !important;\n" +
@@ -300,6 +300,9 @@ function actionFunction() {
                     if (/(.*(?:jpg|png|gif))$/mg.test($linknode.text())) {
                         $linknode.html('<img src="' + $linknode.text() + '" alt="' + $linknode.text() + '"/>');
                     }
+                }
+                if (!reverseDirection) {
+                    $('.tse-scroll-content').scrollTop($('.chat-lines').height());
                 }
             }
 
