@@ -49,6 +49,16 @@ var configFields = {
         "type" : "checkbox",
         "default" : true
     },
+    "SmoothScroll": {
+        "label": "Make new messages slide in smoothly (only works when messages appear on top)",
+        "type": "checkbox",
+        "default": true
+    },
+    "SmoothScrollSpeed": {
+        "label": "Time needed for a new message to slide in (seconds)",
+        "type": "text",
+        "default": "1"
+    },
     "UsernamesToHighlight": {
         "label" : "Username(s)",
         "section" : ["Username Highlighting", "Change the color of any of the usernames listed below. Separate with commas"],
@@ -107,6 +117,8 @@ var configFields = {
         "type" : "hidden"
     }
 };
+var scrollDistance = 0,
+    scrollReference = +new Date();
 
 initConfig();
 waitForKeyElements (".chat-lines", onChatLoad);
@@ -220,49 +232,73 @@ function generateKeywordHighlightingCss() {
 function actionFunction() {
     // The node to be monitored
     var target = $( ".chat-lines" )[0];
+    // If the direction is reversed, we should add some padding at the bottom so we have something to scroll with
+    if (GM_config.get('ReverseDirection')) {
+        document.querySelector('.chat-display .chat-lines').style.paddingBottom = '100vh';
+    }
+    // The div containing the scrollable area
+    var chatContentDiv = document.querySelector('.chat-room .tse-content');
     // Create an observer instance
     var observer = new MutationObserver(function( mutations ) {
         mutations.forEach(function( mutation ) {
             var newNodes = mutation.addedNodes; // DOM NodeList
             if( newNodes !== null ) { // If there are new nodes added
-                var $node = $(newNodes[0]);
-                if( $node.hasClass( "ember-view" ) ) {
+                newNodes.forEach(function(newNode) {
+                    var $node = $(newNode);
+                    if( $node.hasClass( "ember-view" ) ) {
+                        // Add the newly added node's height to the scroll distance and reset the reference distance
+                        scrollReference = scrollDistance = scrollDistance + newNode.scrollHeight;
 
-                    //add data-user=<username> for user-based highlighting
-                    $node.attr('data-user',$node.find('.from').text());
+                        //add data-user=<username> for user-based highlighting
+                        $node.attr('data-user',$node.find('.from').text());
 
-                    //add data-badges=<badges> for badge-based highlighting
-                    var badges = [];
-                    $node.find('.badges .badge').each(function(){
-                        badges.push($(this).attr('alt'));
-                    });
-                    $node.attr('data-badges',badges.join(','));
+                        //add data-badges=<badges> for badge-based highlighting
+                        var badges = [];
+                        $node.find('.badges .badge').each(function(){
+                            badges.push($(this).attr('alt'));
+                        });
+                        $node.attr('data-badges',badges.join(','));
 
-                    //add data-message=<message> for keyword-based highlighting
-                    $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
+                        //add data-message=<message> for keyword-based highlighting
+                        $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
 
-                    //add inline images
-                    if(inlineImages) {
-                        var $links = $node.find('.message a');
-                        $links.each(function(i){
-                            var re = /(.*(?:jpg|png|gif))$/mg;
-                            if(re.test($(this).text())){
-                                $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
+                        //add inline images
+                        if(inlineImages) {
+                            var $links = $node.find('.message a');
+                            $links.each(function(i){
+                                var re = /(.*(?:jpg|png|gif))$/mg;
+                                if(re.test($(this).text())){
+                                    $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
+                                }
+                            });
+                        }
+
+                        //add 'odd' class for zebra striping. Checks the last 10 lines in case of chat flooding
+                        $('.chat-lines > .ember-view').slice(-10).each(function(){
+                            if(!$(this).prev().hasClass('odd')){
+                                $(this).addClass('odd');
                             }
                         });
                     }
-
-                    //add 'odd' class for zebra striping. Checks the last 10 lines in case of chat flooding
-                    $('.chat-lines > .ember-view').slice(-10).each(function(){
-                        if(!$(this).prev().hasClass('odd')){
-                            $(this).addClass('odd');
-                        }
-                    });
-
-                }
+                });
             }
         });
     });
+
+    // Continually scroll up, in a way to make the comments readable
+    var lastFrame = +new Date();
+    function scrollUp(now) {
+        if (GM_config.get("SmoothScroll") && GM_config.get("ReverseDirection") && scrollDistance > 0) {
+            // estimate how far along we are in scrolling in the current scroll reference
+            var currentStep = parseFloat(GM_config.get("SmoothScrollSpeed")) * 1000 / (now - lastFrame);
+            scrollDistance -= scrollReference / currentStep;
+            scrollDistance = Math.max(Math.floor(scrollDistance), 0);
+            chatContentDiv.scrollTo(0, scrollDistance);
+        }
+        lastFrame = now;
+        window.requestAnimationFrame(scrollUp);
+    }
+    window.requestAnimationFrame(scrollUp);
 
     // Configuration of the observer:
     var config = {
