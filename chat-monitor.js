@@ -3,25 +3,25 @@
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.200
+// @version    0.300
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
+// @require  https://raw.githubusercontent.com/sizzlemctwizzle/GM_config/master/gm_config.js
 // @grant       GM_getResourceText
 // @grant       GM_addStyle
-// @require  https://raw.githubusercontent.com/sizzlemctwizzle/GM_config/master/gm_config.js
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_log
-// @resource style http://www.myshelter.net/chat-monitor.css
+// @resource style http://www.myshelter.net/chat-monitor.css?6
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
 
-let getQS = (str)=>{
-    let a, q = {},r = /([^?=&\r\n]+)(?:=([^&\r\n]*))?/g;
+let getQS = (str) => {
+    let a, q = {}, r = /([^?=&\r\n]+)(?:=([^&\r\n]*))?/g;
     while ((a = r.exec(str)) !== null) {
-        q[a[1]] = a[2]||'';
+        q[a[1]] = a[2] || '';
     }
     return q;
 };
@@ -29,6 +29,8 @@ let getQS = (str)=>{
 var qs = getQS(location.search);
 
 var inlineImages = false;
+var usernameColors = false;
+var alignUsernames = false;
 
 //Create config page fields
 //Fields appear in the order written below.
@@ -37,28 +39,37 @@ var configFields = {
     "HideChatInput": { //Id for field in html
         "label" : "Hide Chat Input Area", //Label that appears on the config
         "type" : "checkbox",
-        "default" : false
+        "default" : true
     },
     "ReverseDirection": {
         "label" : "New messages appear on top",
         "type" : "checkbox",
-        "default" : false
+        "default" : true
     },
     "InlineImages": {
         "label" : "Display images that are linked",
         "type" : "checkbox",
         "default" : true
     },
+    "UsernameColors": {
+        "label" : "Colorful usernames",
+        "type" : "checkbox",
+        "default" : false
+    },
+    "AlignUsernames": {
+        "label" : "Align usernames",
+        "type" : "checkbox",
+        "default" : false
+    },
     "UsernamesToHighlight": {
         "label" : "Username(s)",
         "section" : ["Username Highlighting", "Change the color of any of the usernames listed below. Separate with commas"],
         "type" : "text",
         "title" : "seperate usernames with commas, case sensitive",
-        //These as defaults as I can't imagine Paul will mind, and I know I don't mind.
         "default" : ""
     },
-    "UsernameHighlightingColor": {
-        "label" : "Highlight Color",
+    "UsernameHighlightingBackgroundColor": {
+        "label" : "Highlight Background Color",
         "type" : "text",
         "default" : "#ff6696" //Its pink. Its a good color bront.
     },
@@ -79,17 +90,11 @@ var configFields = {
         "section" : ["CSS User Highlighting"],
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
-        "default" : ".chat-lines li[data-badges*='Moderator'] .from {\n" +
-                        "\tcolor: #8383f9 !important;\n" +
+        "default" : ".chat-lines li[data-badges*='Moderator'] {\n" +
+                        "\tbackground-color: #8383f9 !important;\n" +
                     "}\n" +
                     ".chat-lines li[data-badges*='Broadcaster'] {\n" +
                         "\tbackground-color: #000090 !important;\n" +
-                    "}\n" +
-                    ".chat-lines li[data-badges*='Broadcaster'] .from {\n" +
-                        "\tcolor: #00b5e0 !important;\n" +
-                    "}\n" +
-                    ".chat-lines li[data-user='LRRbot'] .from {\n" +
-                        "\tcolor:purple !important;\n" +
                     "}\n" +
                     ".chat-lines li[data-user='LRRbot'][data-message*='thanks for']{\n" +
                         "\tbackground-color:purple !important;\n" +
@@ -116,6 +121,7 @@ function onChatLoad() {
     actionFunction();
 }
 
+
 //Creates , inits the config handler
 //See https://github.com/sizzlemctwizzle/GM_config/wiki for details
 function initConfig() {
@@ -133,29 +139,31 @@ function initConfig() {
 //Checks all config options and loads them appropriately
 function loadSettings() {
     //Add settings wheel to page
-    $( ".ember-chat-container").append("<div id=\"settings-wheel\"> <i class=\"material-icons\">settings</i> </div>");
-    $( "#settings-wheel").click(function() {
-      GM_config.open();
-    });
+    $('.ember-chat-container').append('<div id="settings-wheel"> <i class="material-icons">settings</i> </div>');
+    $('#settings-wheel').click(() => GM_config.open());
 
     //Reverse messages
-    if(typeof qs.reverse !== 'undefined' || GM_config.get("ReverseDirection")) {
-        $( ".tse-content" ).addClass('reverse');
+    if (typeof qs.reverse !== 'undefined' || GM_config.get("ReverseDirection")) {
+        $('.tse-content').addClass('reverse');
     }
 
     //Hide chat interface
-    if(GM_config.get("HideChatInput")) {
-        $( ".qa-chat" ).addClass("hide-chat-interface");
+    if (GM_config.get("HideChatInput")) {
+        $('.qa-chat').addClass("hide-chat-interface");
     }
 
     //Check if we should be adding inline images or not
-    if(typeof qs.img !== 'undefined' || GM_config.get("InlineImages")) {
+    if (typeof qs.img !== 'undefined' || GM_config.get("InlineImages")) {
         inlineImages = true;
     }
+    
+    usernameColors = !!GM_config.get("UsernameColors");
+    alignUsernames = !!GM_config.get("AlignUsernames");
 
-    //Handles UsernamesToHighlight, UsernameHighlightingColor, CustomHighlighting config fields
+    //Handles "Highlight" config fields
     addCssFromConfig(generateCss());
 }
+
 
 //Adds the CSS from the config fields
 //generatedCss will be added to the CSS on the page.
@@ -183,14 +191,11 @@ function generateUsernameHighlightingCss() {
     var generatedCss = "";
     //Load config options, Check if contains data
     var usernamesToHighlight = GM_config.get("UsernamesToHighlight");
-    var usernameHighlightColor = GM_config.get("UsernameHighlightingColor");
-    if(usernamesToHighlight && usernameHighlightColor) {
-        //Split into array on commas
-        var usernameList = usernamesToHighlight.split(",");
-        //Adds rule for each username. This could just add one rule, and save a bit of space, but I think this works just as well.
-        for(var i = 0; i < usernameList.length; i++) {
-            //Add css to variable
-            generatedCss += ".chat-lines li[data-user=\"" + usernameList[i].trim() + "\"] .from {\n\tcolor: " + usernameHighlightColor + " !important;\n }\n";
+    var usernameHighlightBackgroundColor = GM_config.get("UsernameHighlightingBackgroundColor");
+    if (usernamesToHighlight && usernameHighlightBackgroundColor) {
+        let usernameList = usernamesToHighlight.split(",");
+        for (let username of usernameList) {
+            generatedCss += '.chat-lines li[data-user="' + username.trim() + '"] { background-color: ' + usernameHighlightBackgroundColor + ' !important; }' + "\n";
         }
     }
     return generatedCss;
@@ -203,88 +208,103 @@ function generateKeywordHighlightingCss() {
     //data-message attribute makes everything lowercase, so we do the same to our keywords.
     var keywordsToHighlight = GM_config.get("KeywordsToHighlight").toLowerCase();
     var keywordHighlightBackgroundColor = GM_config.get("KeywordHighlightingBackgroundColor");
-    if(keywordsToHighlight && keywordHighlightBackgroundColor) {
-        //Split into array on commas
-        var keywordList = keywordsToHighlight.split(",");
-        //Adds rule for each username. This could just add one rule, and save a bit of space, but I think this works just as well.
-        for(var i = 0; i < keywordList.length; i++) {
-            //Add css to variable
-            generatedCss += ".chat-lines li[data-message*=\"" + keywordList[i] + "\"] {\n";
-            generatedCss += "\tbackground-color: " + keywordHighlightBackgroundColor + " !important;\n";
-            generatedCss += "}\n";
+    if (keywordsToHighlight && keywordHighlightBackgroundColor) {
+        let keywordList = keywordsToHighlight.split(",");
+        for (let keyword of keywordList) {
+            generatedCss += '.chat-lines li[data-message*="' + keyword + '"] { background-color: ' + keywordHighlightBackgroundColor + ' !important; }' + "\n";
         }
     }
     return generatedCss;
 }
 
+
 function actionFunction() {
+
     // The node to be monitored
-    var target = $( ".chat-lines" )[0];
-    // Create an observer instance
-    var observer = new MutationObserver(function( mutations ) {
-        mutations.forEach(function( mutation ) {
-            var newNodes = mutation.addedNodes; // DOM NodeList
-            if( newNodes !== null ) { // If there are new nodes added
-                var $node = $(newNodes[0]);
-                if( $node.hasClass( "ember-view" ) ) {
-
-                    let from = $node.find('.from');
-                    let rgb = from[0].style.color.match(/[0-9.]+/g);
-                    let luminance = (rgb[0]/128 + rgb[1]/85 + rgb[2]/255) / 6;
-                    if (luminance < 0.4) {
-                        rgb = [255 - rgb[0], 255 - rgb[1], 255 - rgb[2]];
-                        from.style.color = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
-                    }
-
-                    //add data-user=<username> for user-based highlighting
-                    $node.attr('data-user', from.text());
-
-                    //add data-badges=<badges> for badge-based highlighting
-                    var badges = [];
-                    $node.find('.badges .badge').each(function(){
-                        badges.push($(this).attr('alt'));
-                    });
-                    $node.attr('data-badges',badges.join(','));
-
-                    //add data-message=<message> for keyword-based highlighting
-                    $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
-
-                    //add inline images
-                    if(inlineImages) {
-                        var $links = $node.find('.message a');
-                        $links.each(function(i){
-                            var re = /(.*(?:jpg|png|gif))$/mg;
-                            if(re.test($(this).text())){
-                                $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
-                            }
-                        });
-                    }
-
-                    //add 'odd' class for zebra striping. Checks the last 10 lines in case of chat flooding
-                    $('.chat-lines > .ember-view').slice(-10).each(function(){
-                        if(!$(this).prev().hasClass('odd')){
-                            $(this).addClass('odd');
-                        }
-                    });
-
-                }
-            }
-        });
-    });
-
+    var target = $(".chat-lines")[0];
+    
     // Configuration of the observer:
     var config = {
         attributes: true,
         childList: true,
         characterData: true
     };
+    
+    // Create an observer instance
+    var observer = new MutationObserver((mutations) => {
+        for (let mutation of mutations) {
+        
+            let newNodes = mutation.addedNodes;  //DOM NodeList
+            if (newNodes === null) continue;  //If there are no new nodes added
+            
+            let $node = $(newNodes[0]);
+            if (!$node.hasClass("ember-view")) continue;  //These are not the nodes you're looking for
+            
+            let $from = $node.find('.from');
+            
+            if (alignUsernames) {
+                //Pad message div
+                let $parent = $from.parent();
+                $parent.addClass("alignusernames-parent");
+                //Put usernames in a fixed width container
+                let $container = $('<div class="alignusernames-container"></div>');
+                $parent.prepend($container);
+                $parent.find('.badges').detach().appendTo($container);
+                $from.detach().appendTo($container);
+                $parent.find('.colon').remove();
+            }
+
+            if (usernameColors) {
+                //Keep username colors, but invert them if they are too dark
+                let rgb = $from[0].style.color.match(/[0-9.]+/g);
+                let luminance = (rgb[0]/128 + rgb[1]/85 + rgb[2]/255) / 6;
+                if (luminance < 0.4) {
+                    rgb = [255 - rgb[0], 255 - rgb[1], 255 - rgb[2]];
+                    $from[0].style.color = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
+                }
+            } else {
+                //Change usernames to green
+                $from.css('color', 'green');
+            }
+
+            //add data-user=<username> for user-based highlighting
+            $node.attr('data-user', $from.text());
+
+            //add data-badges=<badges> for badge-based highlighting
+            let badges = $node.find('.badges .badge').toArray().map((badgenode) => $(badgenode).attr('alt'));
+            $node.attr('data-badges', badges.join(','));
+
+            //add data-message=<message> for keyword-based highlighting
+            $node.attr('data-message', $node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
+
+            //add inline images
+            if (inlineImages) {
+                let $links = $node.find('.message a');
+                for (let link of $links) {
+                    let $linknode = $(link);
+                    if (/(.*(?:jpg|png|gif))$/mg.test($linknode.text())) {
+                        $linknode.html('<img src="' + $linknode.text() + '" alt="' + $linknode.text() + '"/>');
+                    }
+                }
+            }
+
+            //add 'odd' class for zebra striping. Checks the last 10 lines in case of chat flooding
+            let latest = $('.chat-lines > .ember-view').slice(-10);
+            for (let item of latest) {
+                let $embernode = $(item);
+                if (!$embernode.prev().hasClass('odd')) {
+                    $embernode.addClass('odd');
+                }
+            }
+            
+        }
+    });
 
     // Pass in the target node, as well as the observer options
     observer.observe(target, config);
 }
 
-//inject custom stylessheet
-var style = GM_getResourceText('style');
-GM_addStyle(style);
-var materialIcons = GM_getResourceText('material-icons');
-GM_addStyle(materialIcons);
+
+//Inject custom stylessheet
+GM_addStyle(GM_getResourceText('style'));
+GM_addStyle(GM_getResourceText('material-icons'));

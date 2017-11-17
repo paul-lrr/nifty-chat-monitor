@@ -25,17 +25,6 @@ body {
 	display:block !important;
 }
 
-select.form__input,
-textarea.form__input,
-.form__input[type=text],
-.form__input[type=email],
-.form__input[type=password],
-.form__input[type=search],
-.chat-interface,
-.chat-interface__submit {
-	font-size: 2.4rem !important;
-}
-
 .hide-chat-interface .chat-interface {
 	display:none !important;
 }
@@ -70,8 +59,8 @@ textarea.form__input,
 }
 .chat-lines li {
 }
-.chat-lines li.odd{
-	background-color:#111 !important;
+.chat-lines li.odd {
+	background-color:#1a1a1a !important;
 }
 .chat-messages .chat-line {
 	padding:4px !important;
@@ -91,12 +80,6 @@ textarea.form__input,
 }
 
 .tse-scrollbar {
-	display:none !important;
-}
-.mod-icon {
-	display:none !important;
-}
-.badges {
 	display:none !important;
 }
 img {
@@ -132,6 +115,7 @@ a {
 	top: 5px;
 	color: white;
 	z-index: 50;
+	cursor: pointer;
 }
 
 .sticky-message {
@@ -139,4 +123,16 @@ a {
 }
 .chat-messages {
 	top:0px !important;
+}
+
+.alignusernames-parent {
+    position: relative;
+    padding-left: 208px;
+}
+
+.alignusernames-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 200px;
+    text-align: right;
 }
