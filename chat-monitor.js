@@ -56,7 +56,7 @@ var configFields = {
     },
     "SmoothScrollSpeed": {
         "label": "Time needed for a new message to slide in (seconds)",
-        "type": "text",
+        "type": "float",
         "default": "1"
     },
     "UsernamesToHighlight": {
@@ -247,7 +247,8 @@ function actionFunction() {
                     var $node = $(newNode);
                     if( $node.hasClass( "ember-view" ) ) {
                         // Add the newly added node's height to the scroll distance and reset the reference distance
-                        scrollReference = scrollDistance = scrollDistance + newNode.scrollHeight;
+                        newNode.dataset.height = newNode.scrollHeight;
+                        scrollReference = scrollDistance += newNode.scrollHeight;
 
                         //add data-user=<username> for user-based highlighting
                         $node.attr('data-user',$node.find('.from').text());
@@ -273,10 +274,17 @@ function actionFunction() {
                             });
                         }
 
-                        //add 'odd' class for zebra striping. Checks the last 10 lines in case of chat flooding
-                        $('.chat-lines > .ember-view').slice(-10).each(function(){
-                            if(!$(this).prev().hasClass('odd')){
-                                $(this).addClass('odd');
+                        if (!$node.prev().hasClass("odd")) {
+                            $node.addClass("odd");
+                        }
+
+                        newNode.querySelectorAll('img').forEach(img => {
+                            if (img.src.indexOf('jtvnw.net') === -1) { // don't do this for emoticons
+                                img.addEventListener('load', e => {
+                                    scrollReference = scrollDistance += Math.max(0, img.scrollHeight - newNode.dataset.height);
+                                    console.log(img.scrollHeight);
+                                    newNode.dataset.height = newNode.scrollHeight;
+                                });
                             }
                         });
                     }
