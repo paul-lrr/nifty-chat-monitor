@@ -3,7 +3,7 @@
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.200
+// @version    0.201
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
@@ -280,7 +280,9 @@ function actionFunction() {
 
                         newNode.querySelectorAll('img').forEach(img => {
                             if (img.src.indexOf('jtvnw.net') === -1) { // don't do this for emoticons
+                                img.style.display = 'none';
                                 img.addEventListener('load', e => {
+                                    img.style.display = 'inline';
                                     scrollReference = scrollDistance += Math.max(0, img.scrollHeight - newNode.dataset.height);
                                     console.log(img.scrollHeight);
                                     newNode.dataset.height = newNode.scrollHeight;
