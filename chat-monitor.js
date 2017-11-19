@@ -247,7 +247,12 @@ function actionFunction() {
                         $links.each(function(i){
                             var re = /(.*(?:jpg|png|gif))$/mg;
                             if(re.test($(this).text())){
-                                $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
+                                $(this).html('<img src="'+$(this).text().replace("media.giphy.com", "media1.giphy.com")+'" alt="'+$(this).text()+'"/>');
+                            }
+                            var match = /^https?:\/\/giphy\.com\/gifs\/(.+)$/mg.exec($(this).text());
+                            if (match) {
+                                var imageUrl = "https://media1.giphy.com/media/" + match[1].split("-").pop() + "/giphy.gif";
+                                $(this).html('<img src="'+imageUrl+'" alt="'+imageUrl+'"/>');
                             }
                         });
                     }
