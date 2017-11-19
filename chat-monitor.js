@@ -284,7 +284,6 @@ function actionFunction() {
                                 img.addEventListener('load', e => {
                                     img.style.display = 'inline';
                                     scrollReference = scrollDistance += Math.max(0, img.scrollHeight - newNode.dataset.height);
-                                    console.log(img.scrollHeight);
                                     newNode.dataset.height = newNode.scrollHeight;
                                 });
                             }
