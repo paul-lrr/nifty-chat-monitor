@@ -252,7 +252,7 @@ function actionFunction() {
                             var match = /^https?:\/\/giphy\.com\/gifs\/(.+)$/mg.exec($(this).text());
                             if (match) {
                                 var imageUrl = "https://media1.giphy.com/media/" + match[1].split("-").pop() + "/giphy.gif";
-                                $(this).html('<img src="'+imageUrl+'" alt="'+imageUrl+'"/>');
+                                $(this).html('<img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
                             }
                         });
                     }
