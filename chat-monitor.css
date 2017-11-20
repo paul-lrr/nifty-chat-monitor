@@ -84,6 +84,9 @@ textarea.form__input,
 	display:flex;
 	flex-direction:column-reverse; /* Makes the text stick to the bottom of the container so it visually slides in better */
 }
+.chat-lines .chat-clip {
+	background-color: #333 !important;
+}
 .chat-lines .chat-chip .card__title {
 	display: inline;
 	font-size: 32px !important;
