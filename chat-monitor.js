@@ -297,6 +297,7 @@ function actionFunction() {
     // Continually scroll up, in a way to make the comments readable
     var lastFrame = +new Date();
     function scrollUp(now) {
+        window.requestAnimationFrame(scrollUp);
         if (GM_config.get("SmoothScroll") && GM_config.get("ReverseDirection") && scrollDistance > 0) {
             // estimate how far along we are in scrolling in the current scroll reference
             var currentStep = parseFloat(GM_config.get("SmoothScrollSpeed")) * 1000 / (now - lastFrame);
@@ -305,7 +306,6 @@ function actionFunction() {
             chatContentDiv.scrollTo(0, scrollDistance);
         }
         lastFrame = now;
-        window.requestAnimationFrame(scrollUp);
     }
     window.requestAnimationFrame(scrollUp);
 
