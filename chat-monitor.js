@@ -110,6 +110,10 @@ var configFields = {
 
 initConfig();
 waitForKeyElements (".chat-lines", onChatLoad);
+var twitterScript = document.createElement("script");
+twitterScript.type = "text/javascript";
+twitterScript.src = "https://platform.twitter.com/widgets.js";
+document.body.appendChild(twitterScript);
 
 function onChatLoad() {
     loadSettings();
@@ -258,6 +262,16 @@ function actionFunction() {
                             if (match) {
                                 var imageUrl = "https://img.youtube.com/vi/" + match[3] + "/mqdefault.jpg";
                                 $(this).html($(this).text()+'<br/><img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
+                            }
+                            match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)$/mg.exec($(this).text());
+                            if (match) {
+                                var tweetContainer = document.createElement('div');
+                                this.parentNode.appendChild(tweetContainer);
+                                tweetContainer.style.display = 'none';
+                                twttr.widgets.createTweet(match[2], tweetContainer, { theme: 'dark', conversation: 'hidden', cards: 'hidden' }).then(el => {
+                                    tweetContainer.style.display = 'block';
+                                    // scrollReference = scrollDistance += el.scrollHeight; // to uncomment when merged with JavaScript scrolling
+                                }).catch(e => console.log(e));
                             }
                         });
                     }
