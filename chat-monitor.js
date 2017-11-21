@@ -254,7 +254,7 @@ function actionFunction() {
                                 var imageUrl = "https://media1.giphy.com/media/" + match[1].split("-").pop() + "/giphy.gif";
                                 $(this).html('<img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
                             }
-                            match = /^https?:\/\/(www\.)?(youtu\.be\/|youtube\.com\/watch\?v=)(.+)$/mg.exec($(this).text());
+                            match = /^https?:\/\/(www\.)?(youtu\.be\/|youtube\.com\/watch\?v=)([^&]+).*$/mg.exec($(this).text());
                             if (match) {
                                 var imageUrl = "https://img.youtube.com/vi/" + match[3] + "/mqdefault.jpg";
                                 $(this).html($(this).text()+'<br/><img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
