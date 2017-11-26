@@ -84,6 +84,22 @@ textarea.form__input,
 	display:flex;
 	flex-direction:column-reverse; /* Makes the text stick to the bottom of the container so it visually slides in better */
 }
+.chat-lines .chat-clip {
+	background-color: #333 !important;
+}
+.chat-lines .chat-chip .card__title {
+	display: inline;
+	font-size: 32px !important;
+	line-height: 35px !important;
+	color: white;
+	font-weight: 300;
+}
+.chat-lines .chat-chip .card__info {
+	display: inline;
+	font-size: 32px !important;
+	line-height: 35px !important;
+	color: #afabbc;
+}
 .special-message {
     background-color: inherit !important;
 }
