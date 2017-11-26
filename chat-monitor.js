@@ -263,16 +263,17 @@ function actionFunction() {
                         //add data-message=<message> for keyword-based highlighting
                         $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
 
-                        //add inline images
-                        if(inlineImages) {
-                            var $links = $node.find('.message a');
-                            $links.each(function(i){
-                                var re = /(.*(?:jpg|png|gif))$/mg;
-                                if(re.test($(this).text())){
-                                    $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
-                                }
-                            });
-                        }
+
+                    //add inline images
+                    if(inlineImages) {
+                        var $links = $node.find('.message a');
+                        $links.each(function(i){
+                            var re = /(.*(?:jpg|png|gif|jpeg))$/mg;
+                            if(re.test($(this).text())){
+                                $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
+                            }
+                        });
+                    }
 
                         if (!$node.prev().hasClass("odd")) {
                             $node.addClass("odd");

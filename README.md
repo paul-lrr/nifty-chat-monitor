@@ -49,7 +49,7 @@ A few extra functions can be accessed by adding to the query string of the chat 
 *eg. http://www.twitch.tv/loadingreadyrun/chat?display&reverse&img would display the chat in reverse with inline images*
 
 ## Hooks
-Every other message is give a `odd` class for accurate zebra striping
+Every other message is given a `odd` class for accurate zebra striping
 
 The root element of each message is given the following extra attributes:
 

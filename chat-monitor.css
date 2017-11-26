@@ -72,6 +72,22 @@ textarea.form__input,
 	line-height:35px !important;
 	border-bottom:#444 solid 1px !important;
 }
+.chat-lines .chat-clip {
+	background-color: #333 !important;
+}
+.chat-lines .chat-chip .card__title {
+	display: inline;
+	font-size: 32px !important;
+	line-height: 35px !important;
+	color: white;
+	font-weight: 300;
+}
+.chat-lines .chat-chip .card__info {
+	display: inline;
+	font-size: 32px !important;
+	line-height: 35px !important;
+	color: #afabbc;
+}
 .special-message {
     background-color: inherit !important;
 }
