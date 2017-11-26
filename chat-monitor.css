@@ -1,12 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
-@keyframes expand {
-	from { max-height: 0; }
-	/*
-	Anything above 400 pixels in height will pop in after the animation, otherwise images will take a long time loading.
-	Could also be set at a value like 2000px, but then the animation time has to be multiplied by 5 as well.
-	*/
-	to { max-height: 400px; }
-}
 
 body {
 	background-color:black !important;
@@ -79,10 +71,6 @@ textarea.form__input,
 	font-size:32px !important;
 	line-height:35px !important;
 	border-bottom:#444 solid 1px !important;
-	animation:expand 1s linear; /* Needs to be linear as the animation has no idea when it will stop having a visual effect with max-height */
-	overflow:hidden;
-	display:flex;
-	flex-direction:column-reverse; /* Makes the text stick to the bottom of the container so it visually slides in better */
 }
 .chat-lines .chat-clip {
 	background-color: #333 !important;
