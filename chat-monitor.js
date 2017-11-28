@@ -3,7 +3,7 @@
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.201
+// @version    0.202
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
@@ -304,7 +304,7 @@ function actionFunction() {
             var currentStep = parseFloat(GM_config.get("SmoothScrollSpeed")) * 1000 / (now - lastFrame);
             scrollDistance -= scrollReference / currentStep;
             scrollDistance = Math.max(Math.floor(scrollDistance), 0);
-            chatContentDiv.scrollTo(0, scrollDistance);
+            chatContentDiv.scrollTop = scrollDistance;
         }
         lastFrame = now;
     }
