@@ -3,7 +3,7 @@
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.202
+// @version    0.203
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
@@ -230,6 +230,14 @@ function generateKeywordHighlightingCss() {
 }
 
 function actionFunction() {
+    //add keyboard command and element to hide chat
+    $('body').keydown((e)=>{
+        e.preventDefault()
+        if(e.key=="H" && e.shiftKey && e.ctrlKey){
+            $('#hide').toggle();
+        }
+    });
+    $('<div id="hide" />').html('Chat Hidden<br/><br/><br/>Ctrl-Shift-H to Show').hide().appendTo('body');
     // The node to be monitored
     var target = $( ".chat-lines" )[0];
     // If the direction is reversed, we should add some padding at the bottom so we have something to scroll with
