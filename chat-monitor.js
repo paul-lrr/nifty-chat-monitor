@@ -232,7 +232,7 @@ function generateKeywordHighlightingCss() {
 function actionFunction() {
     //add keyboard command and element to hide chat
     $('body').keydown((e)=>{
-        e.preventDefault()
+        e.preventDefault();
         if(e.key=="H" && e.shiftKey && e.ctrlKey){
             $('#hide').toggle();
         }
