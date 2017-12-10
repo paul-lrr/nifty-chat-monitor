@@ -152,3 +152,15 @@ a {
 .chat-messages {
 	top:0px !important;
 }
+#hide {
+	z-index: 99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 200px;
+    display: none;
+}
