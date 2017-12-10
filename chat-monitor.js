@@ -276,36 +276,36 @@ function actionFunction() {
                         $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
 
 
-                    //add inline images
-                    if(inlineImages) {
-                        var $links = $node.find('.message a');
-                        $links.each(function(i){
-                            var re = /(.*(?:jpg|png|gif|jpeg))$/mg;
-                            if(re.test($(this).text())){
-                                $(this).html('<img src="'+$(this).text().replace("media.giphy.com", "media1.giphy.com")+'" alt="'+$(this).text()+'"/>');
-                            }
-                            var match = /^https?:\/\/giphy\.com\/gifs\/(.+)$/mg.exec($(this).text());
-                            if (match) {
-                                var imageUrl = "https://media1.giphy.com/media/" + match[1].split("-").pop() + "/giphy.gif";
-                                $(this).html('<img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
-                            }
-                            match = /^https?:\/\/(www\.)?(youtu\.be\/|youtube\.com\/watch\?v=)([^&?]+).*$/mg.exec($(this).text());
-                            if (match) {
-                                var imageUrl = "https://img.youtube.com/vi/" + match[3] + "/mqdefault.jpg";
-                                $(this).html($(this).text()+'<br/><img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
-                            }
-                            match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)$/mg.exec($(this).text());
-                            if (match) {
-                                var tweetContainer = document.createElement('div');
-                                this.parentNode.appendChild(tweetContainer);
-                                tweetContainer.style.display = 'none';
-                                twttr.widgets.createTweet(match[2], tweetContainer, { theme: 'dark', conversation: 'hidden', cards: 'hidden' }).then(el => {
-                                    tweetContainer.style.display = 'block';
-                                    // scrollReference = scrollDistance += el.scrollHeight; // to uncomment when merged with JavaScript scrolling
-                                }).catch(e => console.log(e));
-                            }
-                        });
-                    }
+                        //add inline images
+                        if(inlineImages) {
+                            var $links = $node.find('.message a');
+                            $links.each(function(i){
+                                var re = /(.*(?:jpg|png|gif|jpeg))$/mg;
+                                if(re.test($(this).text())){
+                                    $(this).html('<img src="'+$(this).text().replace("media.giphy.com", "media1.giphy.com")+'" alt="'+$(this).text()+'"/>');
+                                }
+                                var match = /^https?:\/\/giphy\.com\/gifs\/(.+)$/mg.exec($(this).text());
+                                if (match) {
+                                    var imageUrl = "https://media1.giphy.com/media/" + match[1].split("-").pop() + "/giphy.gif";
+                                    $(this).html('<img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
+                                }
+                                match = /^https?:\/\/(www\.)?(youtu\.be\/|youtube\.com\/watch\?v=)([^&?]+).*$/mg.exec($(this).text());
+                                if (match) {
+                                    var imageUrl = "https://img.youtube.com/vi/" + match[3] + "/mqdefault.jpg";
+                                    $(this).html($(this).text()+'<br/><img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
+                                }
+                                match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)$/mg.exec($(this).text());
+                                if (match) {
+                                    var tweetContainer = document.createElement('div');
+                                    this.parentNode.appendChild(tweetContainer);
+                                    tweetContainer.style.display = 'none';
+                                    twttr.widgets.createTweet(match[2], tweetContainer, { theme: 'dark', conversation: 'hidden', cards: 'hidden' }).then(el => {
+                                        tweetContainer.style.display = 'block';
+                                        // scrollReference = scrollDistance += el.scrollHeight; // to uncomment when merged with JavaScript scrolling
+                                    }).catch(e => console.log(e));
+                                }
+                            });
+                        }
 
                         if (!$node.prev().hasClass("odd")) {
                             $node.addClass("odd");
