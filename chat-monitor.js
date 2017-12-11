@@ -2,7 +2,7 @@
 // @name           Nifty Chat Monitor
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
-// @match        https://www.twitch.tv/*/chat?display*
+// @match        https://www.twitch.tv/popout/*/chat?display*
 // @version    0.204
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
@@ -121,7 +121,7 @@ var scrollDistance = 0,
     scrollReference = +new Date();
 
 initConfig();
-waitForKeyElements (".chat-lines", onChatLoad);
+waitForKeyElements('.chat-list .full-height', onChatLoad);
 
 function onChatLoad() {
     loadSettings();
@@ -145,19 +145,19 @@ function initConfig() {
 //Checks all config options and loads them appropriately
 function loadSettings() {
     //Add settings wheel to page
-    $( ".ember-chat-container").append("<div id=\"settings-wheel\"> <i class=\"material-icons\">settings</i> </div>");
-    $( "#settings-wheel").click(function() {
-      GM_config.open();
+    $('.chat-list').append("<div id=\"settings-wheel\"> <i class=\"material-icons\">settings</i> </div>");
+    $('#settings-wheel').click(function() {
+        GM_config.open();
     });
 
     //Reverse messages
     if(typeof qs.reverse !== 'undefined' || GM_config.get("ReverseDirection")) {
-        $( ".tse-content" ).addClass('reverse');
+        document.querySelector('.chat-list .full-height').classList.add('reverse');
     }
 
     //Hide chat interface
     if(GM_config.get("HideChatInput")) {
-        $( ".qa-chat" ).addClass("hide-chat-interface");
+        document.querySelector('.chat-input').classList.add('hide');
     }
 
     //Check if we should be adding inline images or not
@@ -239,52 +239,51 @@ function actionFunction() {
     });
     $('<div id="hide" />').html('Chat Hidden<br/><br/><br/>Ctrl-Shift-H to Show').hide().appendTo('body');
     // The node to be monitored
-    var target = $( ".chat-lines" )[0];
-    // If the direction is reversed, we should add some padding at the bottom so we have something to scroll with
-    if (GM_config.get('ReverseDirection')) {
-        document.querySelector('.chat-display .chat-lines').style.paddingBottom = '100vh';
-    }
+    var target = document.querySelector('.chat-list .full-height');
+
     // The div containing the scrollable area
-    var chatContentDiv = document.querySelector('.chat-room .tse-content');
+    var chatContentDiv = target.parentNode.parentNode;
     // Create an observer instance
     var observer = new MutationObserver(function( mutations ) {
         mutations.forEach(function( mutation ) {
             var newNodes = mutation.addedNodes; // DOM NodeList
             if( newNodes !== null ) { // If there are new nodes added
                 newNodes.forEach(function(newNode) {
-                    var $node = $(newNode);
-                    if( $node.hasClass( "ember-view" ) ) {
+                    if (newNode.nodeType == Node.ELEMENT_NODE && newNode.classList.contains('chat-line__message')) {
                         // Add the newly added node's height to the scroll distance and reset the reference distance
                         newNode.dataset.height = newNode.scrollHeight;
                         scrollReference = scrollDistance += newNode.scrollHeight;
 
                         //add data-user=<username> for user-based highlighting
-                        $node.attr('data-user',$node.find('.from').text());
+                        newNode.dataset.user = newNode.querySelector('.chat-author__display-name').textContent;
 
                         //add data-badges=<badges> for badge-based highlighting
                         var badges = [];
-                        $node.find('.badges .badge').each(function(){
-                            badges.push($(this).attr('alt'));
+                        newNode.querySelectorAll("img.chat-badge").forEach(function(badge){
+                            badges.push(badge.alt);
                         });
-                        $node.attr('data-badges',badges.join(','));
+                        newNode.dataset.badges = badges.join(',');
 
                         //add data-message=<message> for keyword-based highlighting
-                        $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
+                        var message = newNode.querySelector("span[data-a-target='chat-message-text']");
+                        if (message) {
+                            newNode.dataset.message = message.textContent.replace(/(\r|\s{2,})/gm," ").trim().toLowerCase();
+                        } else if (newNode.querySelector('.chat-image')) {
+                            newNode.dataset.message = 'Emote: ' + newNode.querySelector('.chat-image').alt;
+                        }
 
+                        //add inline images
+                        if(inlineImages) {
+                            newNode.querySelectorAll("span[data-a-target='chat-message-text'] a").forEach(function(link) {
+                                var re = /(.*(?:jpg|png|gif|jpeg))$/mg;
+                                if(re.test(link.textContent)){
+                                    link.innerHTML = '<img src="'+link.textContent+'" alt="'+link.textContent+'"/>';
+                                }
+                            });
+                        }
 
-                    //add inline images
-                    if(inlineImages) {
-                        var $links = $node.find('.message a');
-                        $links.each(function(i){
-                            var re = /(.*(?:jpg|png|gif|jpeg))$/mg;
-                            if(re.test($(this).text())){
-                                $(this).html('<img src="'+$(this).text()+'" alt="'+$(this).text()+'"/>');
-                            }
-                        });
-                    }
-
-                        if (!$node.prev().hasClass("odd")) {
-                            $node.addClass("odd");
+                        if (!newNode.previousElementSibling.classList.contains('odd')) {
+                            newNode.classList.add('odd');
                         }
 
                         newNode.querySelectorAll('img').forEach(img => {
@@ -303,10 +302,12 @@ function actionFunction() {
         });
     });
 
+    // Pass in the target node, as well as the observer options
+    observer.observe(target, { childList: true });
+
     // Continually scroll up, in a way to make the comments readable
     var lastFrame = +new Date();
     function scrollUp(now) {
-        window.requestAnimationFrame(scrollUp);
         if (GM_config.get("SmoothScroll") && GM_config.get("ReverseDirection") && scrollDistance > 0) {
             // estimate how far along we are in scrolling in the current scroll reference
             var currentStep = parseFloat(GM_config.get("SmoothScrollSpeed")) * 1000 / (now - lastFrame);
@@ -315,18 +316,10 @@ function actionFunction() {
             chatContentDiv.scrollTop = scrollDistance;
         }
         lastFrame = now;
+        window.requestAnimationFrame(scrollUp);
     }
     window.requestAnimationFrame(scrollUp);
-
-    // Configuration of the observer:
-    var config = {
-        attributes: true,
-        childList: true,
-        characterData: true
-    };
-
-    // Pass in the target node, as well as the observer options
-    observer.observe(target, config);
+	chatContentDiv.scrollTop = 0;
 }
 
 //inject custom stylessheet
