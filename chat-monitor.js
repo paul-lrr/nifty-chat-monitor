@@ -249,10 +249,14 @@ function actionFunction() {
             var newNodes = mutation.addedNodes; // DOM NodeList
             if( newNodes !== null ) { // If there are new nodes added
                 newNodes.forEach(function(newNode) {
-                    if (newNode.nodeType == Node.ELEMENT_NODE && newNode.classList.contains('chat-line__message')) {
+                    if (newNode.nodeType == Node.ELEMENT_NODE) {
                         // Add the newly added node's height to the scroll distance and reset the reference distance
                         newNode.dataset.height = newNode.scrollHeight;
                         scrollReference = scrollDistance += newNode.scrollHeight;
+
+                        if (!newNode.classList.contains('chat-line__message')) { // Only treat chat messages
+                            return;
+                        }
 
                         //add data-user=<username> for user-based highlighting
                         newNode.dataset.user = newNode.querySelector('.chat-author__display-name').textContent;
