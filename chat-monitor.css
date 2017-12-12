@@ -1,88 +1,73 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
-@keyframes expand {
-	from { max-height: 0; }
-	/*
-	Anything above 400 pixels in height will pop in after the animation, otherwise images will take a long time loading.
-	Could also be set at a value like 2000px, but then the animation time has to be multiplied by 5 as well.
-	*/
-	to { max-height: 400px; }
-}
 
 body {
-	background-color:black !important;
-	font-family: 'Open Sans Condensed', sans-serif !important;
+    background-color:black !important;
+    font-family: 'Open Sans Condensed', sans-serif !important;
 }
-.chat-header {
-	display:none !important;
+
+#root .chat-room__header, .chat-list__more-messages-placeholder {
+    display:none !important;
 }
 
 /* Thanks malc for the fixes to how the chat-interface looks*/
-.chat-interface {
-	font-size: 2rem !important;
-	background: black;
-}
-.chatters .chat-header {
-	display:block !important;
+.chat-input {
+    background: black;
 }
 
-select.form__input,
-textarea.form__input,
-.form__input[type=text],
-.form__input[type=email],
-.form__input[type=password],
-.form__input[type=search],
-.chat-interface,
-.chat-interface__submit {
-	font-size: 2.4rem !important;
+.chat-input select,
+.chat-input textarea,
+.chat-input button,
+.chat-input input[type=text],
+.chat-input input[type=email],
+.chat-input input[type=password],
+.chat-input input[type=search],
+.chat-input {
+    font-size: 2.4rem !important;
 }
 
-.hide-chat-interface .chat-interface {
-	display:none !important;
+.chat-list .full-height.reverse {
+    display:flex !important;
+    flex-direction:column-reverse;
+    padding-bottom:100vh !important;
 }
 
-.hide-chat-interface .chat-messages {
-	bottom:0px !important;
+.chat-room__container {
+    top:0px !important;
+    background-color:black !important;
 }
-
-.tse-content.reverse{
-	height:100%;
-	overflow-y:scroll !important;
+.chat-list .full-height {
+    background-color:black !important;
+    color:#eee;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    padding-top:0 !important;
 }
-
-.chat-display-without-interface {
-	height: 100% !important;
+.chat-line__message.odd {
+    background-color:#111 !important;
 }
-
-.chat-room{
-	top:0px !important;
-	background-color:black !important;
+.chat-line__message, .chat-line__status, .chat-line__subscribe {
+    padding:3px 1px 3px 6px !important;
+    font-size:32px !important;
+    line-height:35px !important;
+    border-bottom:#444 solid 1px !important;
 }
-.chat-lines {
-	background-color:black !important;
-	color:#eee;
-	display: flex;
-	flex-direction: column;
-	justify-content:flex-start;
-	padding-top:0 !important;
+/* TODO: Haven't encountered any clips yet */
+.chat-line__message .chat-clip {
+    background-color: #333 !important;
 }
-.reverse .chat-lines {
-    flex-direction: column-reverse;
+.chat-line__message .chat-chip .card__title {
+    display: inline;
+    font-size: 32px !important;
+    line-height: 35px !important;
+    color: white;
+    font-weight: 300;
 }
-.chat-lines li {
-}
-.chat-lines li.odd{
-	background-color:#111 !important;
-}
-.chat-messages .chat-line {
-	padding:3px 1px 3px 1px !important;
-	margin-top:2px !important;
-	font-size:32px !important;
-	line-height:35px !important;
-	border-bottom:#444 solid 1px !important;
-	animation:expand 1s linear; /* Needs to be linear as the animation has no idea when it will stop having a visual effect with max-height */
-	overflow:hidden;
-	display:flex;
-	flex-direction:column-reverse; /* Makes the text stick to the bottom of the container so it visually slides in better */
+.chat-line__message .chat-chip .card__info {
+    display: inline;
+    font-size: 32px !important;
+    line-height: 35px !important;
+    color: #afabbc;
 }
 .special-message {
     background-color: inherit !important;
@@ -91,38 +76,36 @@ textarea.form__input,
     background-color: inherit !important;
 }
 
-.tse-scrollbar {
-	display:none !important;
-}
 .mod-icon {
-	display:none !important;
+    display:none !important;
 }
-.badges {
-	display:none !important;
+.chat-badge {
+    display:none !important;
 }
 img {
     max-width:100%;
     max-height:50vh;
 }
+/* TODO: no whisper tested yet */
 .chat-messages .whisper-line.whisper-incoming {
     background-color:#3b010e !important;
 }
 a {
-	color:inherit !important;
+    color:inherit !important;
 }
-.from {
-	color:green !important;
+.chat-author__display-name {
+    color:green !important;
 }
-.message {
+span[data-a-target='chat-message-text'], img.chat-image {
     color:white !important;
     font-weight:300 !important;
 }
 
 .deleted {
-	opacity:0.2;
+    opacity:0.2;
 }
 .mentioned {
-	color: inherit;
+    color: inherit;
     background-color: inherit;
 }
 
@@ -131,16 +114,32 @@ a {
 }
 
 #settings-wheel {
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	color: white;
-	z-index: 50;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: rgba(255,255,255,0.3);
+    cursor:pointer;
+    z-index: 50;
+}
+#settings-wheel:hover {
+    color: rgba(255,255,255,1);
 }
 
 .sticky-message {
-	display:none !important;
+    display:none !important;
 }
 .chat-messages {
-	top:0px !important;
+    top:0px !important;
+}
+#hide {
+    z-index: 99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 200px;
+    display: none;
 }
