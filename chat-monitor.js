@@ -3,9 +3,10 @@
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/popout/*/chat?display*
+// @match        https://www.twitch.tv/*/chat?display*
 // @version    0.204
-// @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
-// @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
+// @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/new-twitch/chat-monitor.js
+// @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/new-twitch/chat-monitor.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant       GM_getResourceText
@@ -14,9 +15,14 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_log
-// @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
+// @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/new-twitch/chat-monitor.css
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
+
+// Redirect to new layout if we find the old layout
+if (document.querySelector('.ember-application')) {
+    window.location = window.location.href.replace('twitch.tv', 'twitch.tv/popout');
+}
 
 let getQS = (str)=>{
     let a, q = {},r = /([^?=&\r\n]+)(?:=([^&\r\n]*))?/g;
@@ -121,7 +127,12 @@ var scrollDistance = 0,
     scrollReference = +new Date();
 
 initConfig();
-waitForKeyElements('.chat-list .full-height', onChatLoad);
+var MESSAGE_CONTAINER = '.chat-list .tw-full-height';
+waitForKeyElements(MESSAGE_CONTAINER, onChatLoad);
+var twitterScript = document.createElement("script");
+twitterScript.type = "text/javascript";
+twitterScript.src = "https://platform.twitter.com/widgets.js";
+document.body.appendChild(twitterScript);
 
 function onChatLoad() {
     loadSettings();
@@ -152,12 +163,12 @@ function loadSettings() {
 
     //Reverse messages
     if(typeof qs.reverse !== 'undefined' || GM_config.get("ReverseDirection")) {
-        document.querySelector('.chat-list .full-height').classList.add('reverse');
+        document.querySelector(MESSAGE_CONTAINER).classList.add('reverse');
     }
 
     //Hide chat interface
     if(GM_config.get("HideChatInput")) {
-        document.querySelector('.chat-input').classList.add('hide');
+        document.querySelector('.chat-input').classList.add('tw-hide');
     }
 
     //Check if we should be adding inline images or not
@@ -239,7 +250,7 @@ function actionFunction() {
     });
     $('<div id="hide" />').html('Chat Hidden<br/><br/><br/>Ctrl-Shift-H to Show').hide().appendTo('body');
     // The node to be monitored
-    var target = document.querySelector('.chat-list .full-height');
+    var target = document.querySelector(MESSAGE_CONTAINER);
 
     // The div containing the scrollable area
     var chatContentDiv = target.parentNode.parentNode;
@@ -278,10 +289,30 @@ function actionFunction() {
 
                         //add inline images
                         if(inlineImages) {
-                            newNode.querySelectorAll("span[data-a-target='chat-message-text'] a").forEach(function(link) {
+                            newNode.querySelectorAll('.chat-line__message > a').forEach(function(link) {
                                 var re = /(.*(?:jpg|png|gif|jpeg))$/mg;
-                                if(re.test(link.textContent)){
-                                    link.innerHTML = '<img src="'+link.textContent+'" alt="'+link.textContent+'"/>';
+                                if (re.test(link.textContent)){
+                                    link.innerHTML = '<img src="'+link.textContent.replace("media.giphy.com", "media1.giphy.com")+'" alt="'+link.textContent+'"/>';
+                                }
+                                var match = /^https?:\/\/giphy\.com\/gifs\/(.*-)?([a-zA-Z0-9]+)$/mg.exec(link.textContent);
+                                if (match) {
+                                    var imageUrl = "https://media1.giphy.com/media/" + match[2].split("-").pop() + "/giphy.gif";
+                                    link.innerHTML = '<img src="'+imageUrl+'" alt="'+link.textContent+'"/>';
+                                }
+                                match = /^https?:\/\/(www\.)?(youtu\.be\/|youtube\.com\/watch\?v=)([^&?]+).*$/mg.exec(link.textContent);
+                                if (match) {
+                                    var imageUrl = "https://img.youtube.com/vi/" + match[3] + "/mqdefault.jpg";
+                                    link.innerHTML = link.textContent+'<br/><img src="'+imageUrl+'" alt="'+link.textContent+'"/>';
+                                }
+                                match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)$/mg.exec(link.textContent);
+                                if (match) {
+                                    var tweetContainer = document.createElement('div');
+                                    link.parentNode.appendChild(tweetContainer);
+                                    tweetContainer.style.display = 'none';
+                                    twttr.widgets.createTweet(match[2], tweetContainer, { theme: 'dark', conversation: 'hidden', cards: 'hidden' }).then(el => {
+                                        tweetContainer.style.display = 'block';
+                                        scrollReference = scrollDistance += el.scrollHeight;
+                                    }).catch(e => console.log(e));
                                 }
                             });
                         }

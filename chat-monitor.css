@@ -5,7 +5,7 @@ body {
     font-family: 'Open Sans Condensed', sans-serif !important;
 }
 
-#root .chat-room__header, .chat-list__more-messages-placeholder {
+#root .chat-room__header, .chat-list__more-messages-placeholder, .pinned-cheer {
     display:none !important;
 }
 
@@ -25,7 +25,7 @@ body {
     font-size: 2.4rem !important;
 }
 
-.chat-list .full-height.reverse {
+.chat-list .tw-full-height.reverse {
     display:flex !important;
     flex-direction:column-reverse;
     padding-bottom:100vh !important;
@@ -35,7 +35,7 @@ body {
     top:0px !important;
     background-color:black !important;
 }
-.chat-list .full-height {
+.chat-list .tw-full-height {
     background-color:black !important;
     color:#eee;
     display: flex;
@@ -52,22 +52,24 @@ body {
     line-height:35px !important;
     border-bottom:#444 solid 1px !important;
 }
-/* TODO: Haven't encountered any clips yet */
-.chat-line__message .chat-clip {
+.chat-line__subscribe span {
+    color: white;
+}
+.chat-line__message .chat-card__link {
     background-color: #333 !important;
 }
-.chat-line__message .chat-chip .card__title {
+.chat-line__message .chat-card__link div {
     display: inline;
+}
+.chat-line__message .chat-card__link .chat-card__title span {
     font-size: 32px !important;
     line-height: 35px !important;
     color: white;
-    font-weight: 300;
 }
-.chat-line__message .chat-chip .card__info {
-    display: inline;
+.chat-line__message .chat-card__link .chat-card__title + div span {
     font-size: 32px !important;
     line-height: 35px !important;
-    color: #afabbc;
+    color: #bbb !important;
 }
 .special-message {
     background-color: inherit !important;
