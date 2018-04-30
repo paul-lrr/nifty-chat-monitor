@@ -145,3 +145,10 @@ span[data-a-target='chat-message-text'], img.chat-image {
     padding-top: 200px;
     display: none;
 }
+body .room-selector__header {
+ display:none !important;
+}
+body .pinned-cheer-v2 {
+ display:none !important;
+}
+
