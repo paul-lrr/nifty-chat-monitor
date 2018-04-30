@@ -95,25 +95,25 @@ var configFields = {
         "section" : ["CSS User Highlighting"],
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
-        "default" : ".chat-lines li[data-badges*='Moderator'] .from {\n" +
+        "default" : ".chat-line__message[data-badges*='Moderator'] .from {\n" +
                         "\tcolor: #8383f9 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-badges*='Broadcaster'] {\n" +
+                    ".chat-line__message[data-badges*='Broadcaster'] {\n" +
                         "\tbackground-color: #000090 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-badges*='Broadcaster'] .from {\n" +
+                    ".chat-line__message[data-badges*='Broadcaster'] .from {\n" +
                         "\tcolor: #00b5e0 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user='LRRbot'] .from {\n" +
+                    ".chat-line__message[data-user='LRRbot'] .from {\n" +
                         "\tcolor:purple !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for']{\n" +
+                    ".chat-line__message[data-user='LRRbot'][data-message*='thanks for']{\n" +
                         "\tbackground-color:purple !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for'] .from{\n" +
+                    ".chat-line__message[data-user='LRRbot'][data-message*='thanks for'] .from{\n" +
                         "\tcolor:black !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-message*='loadingreadyrun'] {\n" +
+                    ".chat-line__message[data-message*='loadingreadyrun'] {\n" +
                         "\tbackground-color: #00005d !important;\n" +
                     "}"
     },
@@ -213,7 +213,7 @@ function generateUsernameHighlightingCss() {
         //Adds rule for each username. This could just add one rule, and save a bit of space, but I think this works just as well.
         for(var i = 0; i < usernameList.length; i++) {
             //Add css to variable
-            generatedCss += ".chat-lines li[data-user=\"" + usernameList[i].trim() + "\"] .from {\n\tcolor: " + usernameHighlightColor + " !important;\n }\n";
+            generatedCss += ".chat-line__message[data-user=\"" + usernameList[i].trim() + "\"] .chat-author__display-name {\n\tcolor: " + usernameHighlightColor + " !important;\n }\n";
         }
     }
     return generatedCss;
@@ -232,7 +232,7 @@ function generateKeywordHighlightingCss() {
         //Adds rule for each username. This could just add one rule, and save a bit of space, but I think this works just as well.
         for(var i = 0; i < keywordList.length; i++) {
             //Add css to variable
-            generatedCss += ".chat-lines li[data-message*=\"" + keywordList[i] + "\"] {\n";
+            generatedCss += ".chat-line__message[data-message*=\"" + keywordList[i] + "\"] {\n";
             generatedCss += "\tbackground-color: " + keywordHighlightBackgroundColor + " !important;\n";
             generatedCss += "}\n";
         }
