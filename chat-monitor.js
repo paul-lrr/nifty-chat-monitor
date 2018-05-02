@@ -89,22 +89,22 @@ var configFields = {
         "section" : ["CSS User Highlighting"],
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
-        "default" : ".chat-lines li[data-badges*='Moderator'] .from {\n" +
+        "default" : ".chat-lines li[data-badges*='Moderator'] .chat-author__display-name {\n" +
                         "\tcolor: #8383f9 !important;\n" +
                     "}\n" +
                     ".chat-lines li[data-badges*='Broadcaster'] {\n" +
                         "\tbackground-color: #000090 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-badges*='Broadcaster'] .from {\n" +
+                    ".chat-lines li[data-badges*='Broadcaster'] .chat-author__display-name {\n" +
                         "\tcolor: #00b5e0 !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user='LRRbot'] .from {\n" +
+                    ".chat-lines li[data-user='LRRbot'] .chat-author__display-name {\n" +
                         "\tcolor:purple !important;\n" +
                     "}\n" +
                     ".chat-lines li[data-user='LRRbot'][data-message*='thanks for']{\n" +
                         "\tbackground-color:purple !important;\n" +
                     "}\n" +
-                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for'] .from{\n" +
+                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for'] .chat-author__display-name{\n" +
                         "\tcolor:black !important;\n" +
                     "}\n" +
                     ".chat-lines li[data-message*='loadingreadyrun'] {\n" +
@@ -206,7 +206,7 @@ function generateUsernameHighlightingCss() {
         //Adds rule for each username. This could just add one rule, and save a bit of space, but I think this works just as well.
         for(var i = 0; i < usernameList.length; i++) {
             //Add css to variable
-            generatedCss += ".chat-lines li[data-user=\"" + usernameList[i].trim() + "\"] .from {\n\tcolor: " + usernameHighlightColor + " !important;\n }\n";
+            generatedCss += ".chat-lines li[data-user=\"" + usernameList[i].trim() + "\"] .chat-author__display-name {\n\tcolor: " + usernameHighlightColor + " !important;\n }\n";
         }
     }
     return generatedCss;
@@ -263,7 +263,7 @@ function actionFunction() {
                         scrollReference = scrollDistance += newNode.scrollHeight;
 
                         //add data-user=<username> for user-based highlighting
-                        $node.attr('data-user',$node.find('.from').text());
+                        $node.attr('data-user',$node.find('.chat-author__display-name').text());
 
                         //add data-badges=<badges> for badge-based highlighting
                         var badges = [];

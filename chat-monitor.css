@@ -114,7 +114,7 @@ img {
 a {
 	color:inherit !important;
 }
-.from {
+.chat-author__display-name {
 	color:green !important;
 }
 .message {
