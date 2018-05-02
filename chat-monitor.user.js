@@ -5,8 +5,8 @@
 // @match        https://www.twitch.tv/popout/*/chat?display*
 // @match        https://www.twitch.tv/*/chat?display*
 // @version    0.300
-// @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/new-twitch/chat-monitor.user.js
-// @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/new-twitch/chat-monitor.user.js
+// @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
+// @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant       GM_getResourceText
@@ -15,7 +15,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_log
-// @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/new-twitch/chat-monitor.css
+// @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
 
