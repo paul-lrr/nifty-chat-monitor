@@ -2,11 +2,10 @@
 // @name           Nifty Chat Monitor
 // @namespace      http://somewhatnifty.com
 // @description    reformats twitch chat for display on a chat monitor
-// @match        https://www.twitch.tv/popout/*/chat?display*
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.300
-// @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
-// @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
+// @version    0.205
+// @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
+// @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant       GM_getResourceText
@@ -18,11 +17,6 @@
 // @resource style https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.css
 // @resource material-icons https://fonts.googleapis.com/icon?family=Material+Icons
 // ==/UserScript==
-
-// Redirect to new layout if we find the old layout
-if (document.querySelector('.ember-application')) {
-    window.location = window.location.href.replace('twitch.tv', 'twitch.tv/popout');
-}
 
 let getQS = (str)=>{
     let a, q = {},r = /([^?=&\r\n]+)(?:=([^&\r\n]*))?/g;
@@ -95,25 +89,25 @@ var configFields = {
         "section" : ["CSS User Highlighting"],
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
-        "default" : ".chat-line__message[data-badges*='Moderator'] .from {\n" +
+        "default" : ".chat-lines li[data-badges*='Moderator'] .from {\n" +
                         "\tcolor: #8383f9 !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-badges*='Broadcaster'] {\n" +
+                    ".chat-lines li[data-badges*='Broadcaster'] {\n" +
                         "\tbackground-color: #000090 !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-badges*='Broadcaster'] .from {\n" +
+                    ".chat-lines li[data-badges*='Broadcaster'] .from {\n" +
                         "\tcolor: #00b5e0 !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-user='LRRbot'] .from {\n" +
+                    ".chat-lines li[data-user='LRRbot'] .from {\n" +
                         "\tcolor:purple !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-user='LRRbot'][data-message*='thanks for']{\n" +
+                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for']{\n" +
                         "\tbackground-color:purple !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-user='LRRbot'][data-message*='thanks for'] .from{\n" +
+                    ".chat-lines li[data-user='LRRbot'][data-message*='thanks for'] .from{\n" +
                         "\tcolor:black !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-message*='loadingreadyrun'] {\n" +
+                    ".chat-lines li[data-message*='loadingreadyrun'] {\n" +
                         "\tbackground-color: #00005d !important;\n" +
                     "}"
     },
@@ -127,8 +121,7 @@ var scrollDistance = 0,
     scrollReference = +new Date();
 
 initConfig();
-var MESSAGE_CONTAINER = '.chat-list .tw-full-height';
-waitForKeyElements(MESSAGE_CONTAINER, onChatLoad);
+waitForKeyElements (".chat-lines", onChatLoad);
 var twitterScript = document.createElement("script");
 twitterScript.type = "text/javascript";
 twitterScript.src = "https://platform.twitter.com/widgets.js";
@@ -156,19 +149,19 @@ function initConfig() {
 //Checks all config options and loads them appropriately
 function loadSettings() {
     //Add settings wheel to page
-    $('.chat-list').append("<div id=\"settings-wheel\"> <i class=\"material-icons\">settings</i> </div>");
-    $('#settings-wheel').click(function() {
-        GM_config.open();
+    $( ".ember-chat-container").append("<div id=\"settings-wheel\"> <i class=\"material-icons\">settings</i> </div>");
+    $( "#settings-wheel").click(function() {
+      GM_config.open();
     });
 
     //Reverse messages
     if(typeof qs.reverse !== 'undefined' || GM_config.get("ReverseDirection")) {
-        document.querySelector(MESSAGE_CONTAINER).classList.add('reverse');
+        $( ".tse-content" ).addClass('reverse');
     }
 
     //Hide chat interface
     if(GM_config.get("HideChatInput")) {
-        document.querySelector('.chat-input').classList.add('tw-hide');
+        $( ".qa-chat" ).addClass("hide-chat-interface");
     }
 
     //Check if we should be adding inline images or not
@@ -213,7 +206,7 @@ function generateUsernameHighlightingCss() {
         //Adds rule for each username. This could just add one rule, and save a bit of space, but I think this works just as well.
         for(var i = 0; i < usernameList.length; i++) {
             //Add css to variable
-            generatedCss += ".chat-line__message[data-user=\"" + usernameList[i].trim() + "\"] .chat-author__display-name {\n\tcolor: " + usernameHighlightColor + " !important;\n }\n";
+            generatedCss += ".chat-lines li[data-user=\"" + usernameList[i].trim() + "\"] .from {\n\tcolor: " + usernameHighlightColor + " !important;\n }\n";
         }
     }
     return generatedCss;
@@ -232,7 +225,7 @@ function generateKeywordHighlightingCss() {
         //Adds rule for each username. This could just add one rule, and save a bit of space, but I think this works just as well.
         for(var i = 0; i < keywordList.length; i++) {
             //Add css to variable
-            generatedCss += ".chat-line__message[data-message*=\"" + keywordList[i] + "\"] {\n";
+            generatedCss += ".chat-lines li[data-message*=\"" + keywordList[i] + "\"] {\n";
             generatedCss += "\tbackground-color: " + keywordHighlightBackgroundColor + " !important;\n";
             generatedCss += "}\n";
         }
@@ -250,75 +243,72 @@ function actionFunction() {
     });
     $('<div id="hide" />').html('Chat Hidden<br/><br/><br/>Ctrl-Shift-H to Show').hide().appendTo('body');
     // The node to be monitored
-    var target = document.querySelector(MESSAGE_CONTAINER);
-
+    var target = $( ".chat-lines" )[0];
+    // If the direction is reversed, we should add some padding at the bottom so we have something to scroll with
+    if (GM_config.get('ReverseDirection')) {
+        document.querySelector('.chat-display .chat-lines').style.paddingBottom = '100vh';
+    }
     // The div containing the scrollable area
-    var chatContentDiv = target.parentNode.parentNode;
+    var chatContentDiv = document.querySelector('.chat-room .tse-content');
     // Create an observer instance
     var observer = new MutationObserver(function( mutations ) {
         mutations.forEach(function( mutation ) {
             var newNodes = mutation.addedNodes; // DOM NodeList
             if( newNodes !== null ) { // If there are new nodes added
                 newNodes.forEach(function(newNode) {
-                    if (newNode.nodeType == Node.ELEMENT_NODE) {
+                    var $node = $(newNode);
+                    if( $node.hasClass( "ember-view" ) ) {
                         // Add the newly added node's height to the scroll distance and reset the reference distance
                         newNode.dataset.height = newNode.scrollHeight;
                         scrollReference = scrollDistance += newNode.scrollHeight;
 
-                        if (!newNode.classList.contains('chat-line__message')) { // Only treat chat messages
-                            return;
-                        }
-
                         //add data-user=<username> for user-based highlighting
-                        newNode.dataset.user = newNode.querySelector('.chat-author__display-name').textContent;
+                        $node.attr('data-user',$node.find('.from').text());
 
                         //add data-badges=<badges> for badge-based highlighting
                         var badges = [];
-                        newNode.querySelectorAll("img.chat-badge").forEach(function(badge){
-                            badges.push(badge.alt);
+                        $node.find('.badges .badge').each(function(){
+                            badges.push($(this).attr('alt'));
                         });
-                        newNode.dataset.badges = badges.join(',');
+                        $node.attr('data-badges',badges.join(','));
 
                         //add data-message=<message> for keyword-based highlighting
-                        var message = newNode.querySelector("span[data-a-target='chat-message-text']");
-                        if (message) {
-                            newNode.dataset.message = message.textContent.replace(/(\r|\s{2,})/gm," ").trim().toLowerCase();
-                        } else if (newNode.querySelector('.chat-image')) {
-                            newNode.dataset.message = 'Emote: ' + newNode.querySelector('.chat-image').alt;
-                        }
+                        $node.attr('data-message',$node.find('.message').text().replace(/(\r|\s{2,})/gm," ").trim().toLowerCase());
+
 
                         //add inline images
                         if(inlineImages) {
-                            newNode.querySelectorAll('.chat-line__message > a').forEach(function(link) {
+                            var $links = $node.find('.message a');
+                            $links.each(function(i){
                                 var re = /(.*(?:jpg|png|gif|jpeg))$/mg;
-                                if (re.test(link.textContent)){
-                                    link.innerHTML = '<img src="'+link.textContent.replace("media.giphy.com", "media1.giphy.com")+'" alt="'+link.textContent+'"/>';
+                                if(re.test($(this).text())){
+                                    $(this).html('<img src="'+$(this).text().replace("media.giphy.com", "media1.giphy.com")+'" alt="'+$(this).text()+'"/>');
                                 }
-                                var match = /^https?:\/\/giphy\.com\/gifs\/(.*-)?([a-zA-Z0-9]+)$/mg.exec(link.textContent);
+                                var match = /^https?:\/\/giphy\.com\/gifs\/(.+)$/mg.exec($(this).text());
                                 if (match) {
-                                    var imageUrl = "https://media1.giphy.com/media/" + match[2].split("-").pop() + "/giphy.gif";
-                                    link.innerHTML = '<img src="'+imageUrl+'" alt="'+link.textContent+'"/>';
+                                    var imageUrl = "https://media1.giphy.com/media/" + match[1].split("-").pop() + "/giphy.gif";
+                                    $(this).html('<img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
                                 }
-                                match = /^https?:\/\/(www\.)?(youtu\.be\/|youtube\.com\/watch\?v=)([^&?]+).*$/mg.exec(link.textContent);
+                                match = /^https?:\/\/(www\.)?(youtu\.be\/|youtube\.com\/watch\?v=)([^&?]+).*$/mg.exec($(this).text());
                                 if (match) {
                                     var imageUrl = "https://img.youtube.com/vi/" + match[3] + "/mqdefault.jpg";
-                                    link.innerHTML = link.textContent+'<br/><img src="'+imageUrl+'" alt="'+link.textContent+'"/>';
+                                    $(this).html($(this).text()+'<br/><img src="'+imageUrl+'" alt="'+$(this).text()+'"/>');
                                 }
-                                match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)$/mg.exec(link.textContent);
+                                match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)$/mg.exec($(this).text());
                                 if (match) {
                                     var tweetContainer = document.createElement('div');
-                                    link.parentNode.appendChild(tweetContainer);
+                                    this.parentNode.appendChild(tweetContainer);
                                     tweetContainer.style.display = 'none';
                                     twttr.widgets.createTweet(match[2], tweetContainer, { theme: 'dark', conversation: 'hidden', cards: 'hidden' }).then(el => {
                                         tweetContainer.style.display = 'block';
-                                        scrollReference = scrollDistance += el.scrollHeight;
+                                        // scrollReference = scrollDistance += el.scrollHeight; // to uncomment when merged with JavaScript scrolling
                                     }).catch(e => console.log(e));
                                 }
                             });
                         }
 
-                        if (!newNode.previousElementSibling.classList.contains('odd')) {
-                            newNode.classList.add('odd');
+                        if (!$node.prev().hasClass("odd")) {
+                            $node.addClass("odd");
                         }
 
                         newNode.querySelectorAll('img').forEach(img => {
@@ -337,12 +327,10 @@ function actionFunction() {
         });
     });
 
-    // Pass in the target node, as well as the observer options
-    observer.observe(target, { childList: true });
-
     // Continually scroll up, in a way to make the comments readable
     var lastFrame = +new Date();
     function scrollUp(now) {
+        window.requestAnimationFrame(scrollUp);
         if (GM_config.get("SmoothScroll") && GM_config.get("ReverseDirection") && scrollDistance > 0) {
             // estimate how far along we are in scrolling in the current scroll reference
             var currentStep = parseFloat(GM_config.get("SmoothScrollSpeed")) * 1000 / (now - lastFrame);
@@ -351,10 +339,18 @@ function actionFunction() {
             chatContentDiv.scrollTop = scrollDistance;
         }
         lastFrame = now;
-        window.requestAnimationFrame(scrollUp);
     }
     window.requestAnimationFrame(scrollUp);
-	chatContentDiv.scrollTop = 0;
+
+    // Configuration of the observer:
+    var config = {
+        attributes: true,
+        childList: true,
+        characterData: true
+    };
+
+    // Pass in the target node, as well as the observer options
+    observer.observe(target, config);
 }
 
 //inject custom stylessheet
