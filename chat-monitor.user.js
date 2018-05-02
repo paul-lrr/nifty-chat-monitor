@@ -4,7 +4,7 @@
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/popout/*/chat?display*
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.300
+// @version    0.301
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
@@ -95,22 +95,22 @@ var configFields = {
         "section" : ["CSS User Highlighting"],
         "type" : "textarea",
         //Keeping CSS in from chat-monitor-highlight.css as an example of what you can do
-        "default" : ".chat-line__message[data-badges*='Moderator'] .from {\n" +
+        "default" : ".chat-line__message[data-badges*='Moderator'] .chat-author__display-name {\n" +
                         "\tcolor: #8383f9 !important;\n" +
                     "}\n" +
                     ".chat-line__message[data-badges*='Broadcaster'] {\n" +
                         "\tbackground-color: #000090 !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-badges*='Broadcaster'] .from {\n" +
+                    ".chat-line__message[data-badges*='Broadcaster'] .chat-author__display-name {\n" +
                         "\tcolor: #00b5e0 !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-user='LRRbot'] .from {\n" +
+                    ".chat-line__message[data-user='LRRbot'] .chat-author__display-name {\n" +
                         "\tcolor:purple !important;\n" +
                     "}\n" +
                     ".chat-line__message[data-user='LRRbot'][data-message*='thanks for']{\n" +
                         "\tbackground-color:purple !important;\n" +
                     "}\n" +
-                    ".chat-line__message[data-user='LRRbot'][data-message*='thanks for'] .from{\n" +
+                    ".chat-line__message[data-user='LRRbot'][data-message*='thanks for'] .chat-author__display-name{\n" +
                         "\tcolor:black !important;\n" +
                     "}\n" +
                     ".chat-line__message[data-message*='loadingreadyrun'] {\n" +
