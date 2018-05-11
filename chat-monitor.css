@@ -46,7 +46,7 @@ body {
 .chat-line__message.odd {
     background-color:#111 !important;
 }
-.chat-line__message, .chat-line__status, .chat-line__subscribe {
+.chat-line__message, .chat-line__status, .chat-line__subscribe, .user-notice-line {
     padding:3px 1px 3px 6px !important;
     font-size:32px !important;
     line-height:35px !important;
@@ -70,6 +70,10 @@ body {
     font-size: 32px !important;
     line-height: 35px !important;
     color: #bbb !important;
+}
+.mention-fragment {
+    background-color: transparent !important;
+    padding: 0;
 }
 .special-message {
     background-color: inherit !important;
@@ -154,4 +158,3 @@ body .pinned-cheer-v2 {
 .scrollable-area .simplebar-track {
     display:none !important;
 }
-
