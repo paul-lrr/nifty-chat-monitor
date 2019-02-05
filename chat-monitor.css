@@ -122,13 +122,13 @@ img.chat-line__message--emote {
 .tw-c-text-alt-2 {
     display:none;
 }
-.tw-c-text-link{
+p.tw-c-text-link{
     display:inline;
 }
 .tw-mg-l-05 .tw-block {
     display:inline !important;
 }
-.tw-root--theme-dark .tw-c-text-link, .tw-mg-l-05{
+p.tw-c-text-link, p.tw-mg-l-05{
     font-size:32px;
     line-height:35px;
 }
