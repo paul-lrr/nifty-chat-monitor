@@ -69,7 +69,7 @@ body {
     line-height: 35px !important;
     color: #bbb !important;
 }
-.mention-fragment {
+div.mention-fragment {
     background-color: transparent !important;
     padding: 0;
 }
@@ -111,6 +111,11 @@ span[data-a-target='chat-message-text'], img.chat-image {
 .mentioned {
     color: inherit;
     background-color: inherit;
+}
+
+img.chat-line__message--emote {
+    margin:0;
+    vertical-align:baseline;
 }
 
 /* Clean up subscription messages */
