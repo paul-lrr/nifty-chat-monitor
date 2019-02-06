@@ -4,7 +4,7 @@
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/popout/*/chat?display*
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.302
+// @version    0.303
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
@@ -343,7 +343,7 @@ function actionFunction() {
     // Continually scroll up, in a way to make the comments readable
     var lastFrame = +new Date();
     function scrollUp(now) {
-        if (chatContentDiv.scrollTop > 0 && GM_config.get("ReverseDirection")) {
+        if (GM_config.get("ReverseDirection")) {
             if (scrollDistance > 0 && GM_config.get("SmoothScroll")) {
                 // estimate how far along we are in scrolling in the current scroll reference
                 var currentStep = parseFloat(GM_config.get("SmoothScrollSpeed")) * 1000 / (now - lastFrame);
@@ -358,7 +358,16 @@ function actionFunction() {
         window.requestAnimationFrame(scrollUp);
     }
     window.requestAnimationFrame(scrollUp);
-	chatContentDiv.scrollTop = 0;
+    chatContentDiv.scrollTop = 0;
+
+    // Disable Twitch autoscroll with a little trick for performance reasons
+    if (GM_config.get("ReverseDirection")) {
+        setTimeout(function() {
+            chatContentDiv.scrollBy(0, -200);
+            chatContentDiv.dispatchEvent(new WheelEvent('wheel', {deltaY: -200}));
+            chatContentDiv.scrollBy(0, 200);
+        }, 5000);
+    }
 }
 
 //inject custom stylessheet

@@ -5,7 +5,7 @@ body {
     font-family: 'Open Sans Condensed', sans-serif !important;
 }
 
-#root .chat-room__header, .chat-list__more-messages-placeholder, .pinned-cheer {
+#root .chat-room__header, .chat-list__more-messages-placeholder, .pinned-cheer, .chat-room__notifications {
     display:none !important;
 }
 
@@ -46,15 +46,13 @@ body {
 .chat-line__message.odd {
     background-color:#111 !important;
 }
-.chat-line__message, .chat-line__status, .chat-line__subscribe, .user-notice-line {
+.chat-list .tw-full-height > .chat-line__message, .chat-line__status, .user-notice-line {
     padding:3px 1px 3px 6px !important;
     font-size:32px !important;
     line-height:35px !important;
     border-bottom:#444 solid 1px !important;
 }
-.chat-line__subscribe span {
-    color: white;
-}
+
 .chat-line__message .chat-card__link {
     background-color: #333 !important;
 }
@@ -71,7 +69,7 @@ body {
     line-height: 35px !important;
     color: #bbb !important;
 }
-.mention-fragment {
+div.mention-fragment {
     background-color: transparent !important;
     padding: 0;
 }
@@ -113,6 +111,37 @@ span[data-a-target='chat-message-text'], img.chat-image {
 .mentioned {
     color: inherit;
     background-color: inherit;
+}
+
+img.chat-line__message--emote {
+    margin:0;
+    vertical-align:baseline;
+}
+
+/* Clean up subscription messages */
+.tw-c-text-alt-2 {
+    display:none;
+}
+p.tw-c-text-link{
+    display:inline;
+}
+.tw-mg-l-05 .tw-block {
+    display:inline !important;
+}
+p.tw-c-text-link, p.tw-mg-l-05{
+    font-size:32px;
+    line-height:35px;
+}
+div.tw-mg-y-05{
+    margin-bottom:0 !important;
+    margin-top:0 !important;
+}
+div.tw-pd-y-05{
+    padding-bottom:0 !important;
+    padding-top:0 !important;
+}
+div.tw-pd-r-2{
+    padding-right:0 !important;
 }
 
 ::-webkit-scrollbar {
@@ -158,3 +187,5 @@ body .pinned-cheer-v2 {
 .scrollable-area .simplebar-track {
     display:none !important;
 }
+
+
