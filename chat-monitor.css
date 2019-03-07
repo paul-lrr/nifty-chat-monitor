@@ -5,7 +5,7 @@ body {
     font-family: 'Open Sans Condensed', sans-serif !important;
 }
 
-#root .chat-room__header, .chat-list__more-messages-placeholder, .pinned-cheer, .chat-room__notifications, .rooms-header {
+#root .chat-room__header, .chat-list__more-messages-placeholder, .pinned-cheer, .chat-room__notifications, #root .rooms-header {
     display:none !important;
 }
 
