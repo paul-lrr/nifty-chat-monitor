@@ -4,7 +4,7 @@
 // @description    reformats twitch chat for display on a chat monitor
 // @match        https://www.twitch.tv/popout/*/chat?display*
 // @match        https://www.twitch.tv/*/chat?display*
-// @version    0.305
+// @version    0.306
 // @updateURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
 // @downloadURL https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor.user.js
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
@@ -243,7 +243,7 @@ function generateKeywordHighlightingCss() {
 function actionFunction() {
     //add keyboard command and element to hide chat
     $('body').keydown((e)=>{
-        if(e.key=="H" && e.shiftKey && e.ctrlKey){
+        if((e.key=="H"||e.key=="h") && e.shiftKey && e.ctrlKey){
             e.preventDefault();
             $('#hide').toggle();
         }
