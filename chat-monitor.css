@@ -1,191 +1,201 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
-
 body {
-    background-color:black !important;
-    font-family: 'Open Sans Condensed', sans-serif !important;
+  background-color: black !important;
 }
 
-#root .chat-room__header, .chat-list__more-messages-placeholder, .pinned-cheer, .chat-room__notifications, #root .rooms-header {
-    display:none !important;
+#root .chat-room__header,
+.chat-list__more-messages-placeholder,
+.pinned-cheer,
+.chat-room__notifications,
+#root .rooms-header {
+  display: none !important;
 }
 
 /* Thanks malc for the fixes to how the chat-interface looks*/
 .chat-input {
-    background: black;
+  background: black;
 }
 
 .chat-input select,
 .chat-input textarea,
 .chat-input button,
-.chat-input input[type=text],
-.chat-input input[type=email],
-.chat-input input[type=password],
-.chat-input input[type=search],
+.chat-input input[type="text"],
+.chat-input input[type="email"],
+.chat-input input[type="password"],
+.chat-input input[type="search"],
 .chat-input {
-    font-size: 2.4rem !important;
+  font-size: 2.4rem !important;
 }
 
 .chat-list .tw-full-height.reverse {
-    display:flex !important;
-    flex-direction:column-reverse;
-    padding-bottom:100vh !important;
+  display: flex !important;
+  flex-direction: column-reverse;
+  padding-bottom: 100vh !important;
 }
 
 .chat-room__container {
-    top:0px !important;
-    background-color:black !important;
+  top: 0px !important;
+  background-color: black !important;
 }
 .chat-list .tw-full-height {
-    background-color:black !important;
-    color:#eee;
-    display: flex;
-    flex-direction: column;
-    justify-content:flex-start;
-    padding-top:0 !important;
+  background-color: black !important;
+  color: #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 0 !important;
 }
 .chat-line__message.odd {
-    background-color:#111 !important;
+  background-color: #111 !important;
 }
-.chat-list .tw-full-height > .chat-line__message, .chat-line__status, .user-notice-line {
-    padding:3px 1px 3px 6px !important;
-    font-size:32px !important;
-    line-height:35px !important;
-    border-bottom:#444 solid 1px !important;
+.chat-list .tw-full-height > .chat-line__message,
+.chat-line__status,
+.user-notice-line {
+  padding: 3px 1px 3px 6px !important;
+  font-size: 32px !important;
+  line-height: 35px !important;
+  border-bottom: #444 solid 1px !important;
 }
 
 .chat-line__message .chat-card__link {
-    background-color: #333 !important;
+  background-color: #333 !important;
 }
 .chat-line__message .chat-card__link div {
-    display: inline;
+  display: inline;
 }
 .chat-line__message .chat-card__link .chat-card__title span {
-    font-size: 32px !important;
-    line-height: 35px !important;
-    color: white;
+  font-size: 32px !important;
+  line-height: 35px !important;
+  color: white;
 }
 .chat-line__message .chat-card__link .chat-card__title + div span {
-    font-size: 32px !important;
-    line-height: 35px !important;
-    color: #bbb !important;
+  font-size: 32px !important;
+  line-height: 35px !important;
+  color: #bbb !important;
 }
 div.mention-fragment {
-    background-color: transparent !important;
-    padding: 0;
+  background-color: transparent !important;
+  padding: 0;
 }
 .special-message {
-    background-color: inherit !important;
+  background-color: inherit !important;
 }
 .system-msg {
-    background-color: inherit !important;
+  background-color: inherit !important;
 }
 
 .mod-icon {
-    display:none !important;
+  display: none !important;
 }
 .chat-badge {
-    display:none !important;
+  display: none !important;
 }
 img {
-    max-width:100%;
-    max-height:50vh;
+  max-width: 100%;
+  max-height: 50vh;
 }
 /* TODO: no whisper tested yet */
 .chat-messages .whisper-line.whisper-incoming {
-    background-color:#3b010e !important;
+  background-color: #3b010e !important;
 }
 a {
-    color:inherit !important;
+  color: inherit !important;
 }
 .chat-author__display-name {
-    color:green !important;
+  color: green !important;
 }
-span[data-a-target='chat-message-text'], img.chat-image {
-    color:white !important;
-    font-weight:300 !important;
+span[data-a-target="chat-message-text"],
+img.chat-image {
+  color: white !important;
+  font-weight: 300 !important;
 }
 
 .deleted {
-    opacity:0.2;
+  opacity: 0.2;
 }
 .mentioned {
-    color: inherit;
-    background-color: inherit;
+  color: inherit;
+  background-color: inherit;
 }
 
 img.chat-line__message--emote {
-    margin:0;
-    vertical-align:baseline;
+  margin: 0;
+  vertical-align: baseline;
 }
 
 /* Clean up subscription messages */
 .tw-c-text-alt-2 {
-    display:none;
+  display: none;
 }
-p.tw-c-text-link{
-    display:inline;
+p.tw-c-text-link {
+  display: inline;
 }
 .tw-mg-l-05 .tw-block {
-    display:inline !important;
+  display: inline !important;
 }
-p.tw-c-text-link, p.tw-mg-l-05{
-    font-size:32px;
-    line-height:35px;
+p.tw-c-text-link,
+p.tw-mg-l-05 {
+  font-size: 32px;
+  line-height: 35px;
 }
-div.tw-mg-y-05{
-    margin-bottom:0 !important;
-    margin-top:0 !important;
+div.tw-mg-y-05 {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
-div.tw-pd-y-05{
-    padding-bottom:0 !important;
-    padding-top:0 !important;
+div.tw-pd-y-05 {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
 }
-div.tw-pd-r-2{
-    padding-right:0 !important;
+div.tw-pd-r-2 {
+  padding-right: 0 !important;
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 #settings-wheel {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    color: rgba(255,255,255,0.3);
-    cursor:pointer;
-    z-index: 50;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  z-index: 50;
 }
 #settings-wheel:hover {
-    color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
 }
 
 .sticky-message {
-    display:none !important;
+  display: none !important;
 }
 .chat-messages {
-    top:0px !important;
+  top: 0px !important;
 }
 #hide {
-    z-index: 99;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    font-size: 32px;
-    font-weight: bold;
-    text-align: center;
-    padding-top: 200px;
-    display: none;
+  z-index: 99;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 200px;
+  display: none;
 }
 body .room-selector__header {
- display:none !important;
+  display: none !important;
 }
 body .pinned-cheer-v2 {
- display:none !important;
+  display: none !important;
 }
 .scrollable-area .simplebar-track {
-    display:none !important;
+  display: none !important;
 }
 
-
+body .tw-z-default {
+  display: none !important;
+}
+body .chat-list__list-footer {
+  display: none !important;
+}
