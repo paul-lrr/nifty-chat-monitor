@@ -326,7 +326,7 @@ function actionFunction() {
             //add inline images
             if (inlineImages) {
               newNode.querySelectorAll(".chat-line__message > a").forEach(function(link) {
-                var re = /(.*(?:jpg|png|gif|jpeg))$/gm;
+                var re = /.*(?:jpe?g|png|gif)$/gm;
                 if (re.test(link.textContent)) {
                   link.innerHTML =
                     '<img src="' + link.textContent.replace("media.giphy.com", "media1.giphy.com") + '" alt="' + link.textContent + '"/>';
