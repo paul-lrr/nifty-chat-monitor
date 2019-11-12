@@ -326,7 +326,7 @@ function actionFunction() {
             //add inline images
             if (inlineImages) {
               newNode.querySelectorAll(".chat-line__message > a").forEach(function(link) {
-                var re = /.*(?:jpe?g|png|gif)$/gim;
+                var re = /.*(?:jpe?g|png|gif)(?:\?.*)?$/gim;
                 if (re.test(link.textContent)) {
                   link.innerHTML =
                     '<img src="' + link.textContent.replace("media.giphy.com", "media1.giphy.com") + '" alt="' + link.textContent + '"/>';
@@ -341,7 +341,7 @@ function actionFunction() {
                   var imageUrl = "https://img.youtube.com/vi/" + match[3] + "/mqdefault.jpg";
                   link.innerHTML = link.textContent + '<br/><img src="' + imageUrl + '" alt="' + link.textContent + '"/>';
                 }
-                match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)$/gm.exec(link.textContent);
+                match = /^https?:\/\/(www\.)?twitter\.com.+\/([0-9]+)(?:\?.*)?$/gm.exec(link.textContent);
                 if (match) {
                   var tweetContainer = document.createElement("div");
                   link.parentNode.appendChild(tweetContainer);
