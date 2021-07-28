@@ -1,6 +1,8 @@
-# Nifty Chat Monitor: Twitch bèta support
+> **Due to Changes in the Twitch Chat display, this script no longer works. If you are still looking for a reformatted Twitch Chat, check out [Twitch Chat Monitor](https://glodenox.github.io/twitch-chat-monitor/) By Glodenox (Repository here: https://github.com/Glodenox/twitch-chat-monitor)**
 
-Userscript for Grease/Tampermonkey to reformat the bèta twitch chat for use on an non-interactive chat monitor. It removes all extraneous formatting to maximize screen real estate for the chat text and adds various hooks to each chat message so that they can be effectively targeted by CSS rules.
+# Nifty Chat Monitor:
+
+Userscript for Grease/Tampermonkey to reformat the bÃ¨ta twitch chat for use on an non-interactive chat monitor. It removes all extraneous formatting to maximize screen real estate for the chat text and adds various hooks to each chat message so that they can be effectively targeted by CSS rules.
 
 ![smaple image](https://raw.githubusercontent.com/paul-lrr/nifty-chat-monitor/master/chat-monitor-sample.png)
 *LEFT: default Dark mode twitch Chat -- RIGHT: Nifty Chat Monitor reformated chat*
